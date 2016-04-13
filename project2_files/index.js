@@ -417,11 +417,12 @@ function isLightVisible(pt, scene, light) {
 var planet1 = 0,
     planet2 = 0;
 
+var f = document.querySelector("#fps");
 function tick() {
     // make one planet spin a little bit faster than the other, just for
     // effect.
-    planet1 += 0.1;
-    planet2 += 0.2;
+    planet1 += 0.05;
+    planet2 += 0.08;
 
     // set the position of each moon with some trig.
     scene.objects[1].point.x = Math.sin(planet1) * 3.5;
@@ -432,6 +433,9 @@ function tick() {
 
     // finally, render the scene!
     render(scene);
+
+    //get the FPS
+    f.innerHTML = fps.getFPS();
 
     // and as soon as we're finished, render it again and move the planets
     // again
