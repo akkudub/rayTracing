@@ -2,97 +2,14 @@
 
 // # Setup
 var mainCanvas = document.getElementById('mainCanvas'),
-    width = 640 * 0.5,
-    height = 480 * 0.5;
+    width = 800 * 0.5,
+    height = 800 * 0.5;
 
 mainCanvas.width = width;
 mainCanvas.height = height;
 mainCanvas.style.cssText = 'width:' + (width * 2) + 'px;height:' + (height*2) + 'px';
 var ctx = mainCanvas.getContext('2d'),
     data = ctx.getImageData(0, 0, width, height);
-
-// # The Scene
-var scene = {};
-
-// ## The Camera
-scene.camera = {
-    point: {
-        x: 0,
-        y: 1.8,
-        z: 10
-    },
-    fieldOfView: 45,
-    vector: {
-        x: 0,
-        y: 3,
-        z: 0
-    }
-};
-
-// ## Lights
-scene.lights = [{
-    x: -30,
-    y: -10,
-    z: 20
-}];
-
-// ## Objects
-scene.objects = [
-    {
-        // earth
-        type: 'sphere',
-        point: {
-            x: 0,
-            y: 3.5,
-            z: -3
-        },
-        color: {
-            x: 200,
-            y: 100,
-            z: 100
-        },
-        specular: 0.2,
-        lambert: 0.7,
-        ambient: 0.1,
-        radius: 3
-    },
-    // big moon
-    {
-        type: 'sphere',
-        point: {
-            x: -4,
-            y: 3,
-            z: -1
-        },
-        color: {
-            x: 155,
-            y: 200,
-            z: 0
-        },
-        specular: 0.1,
-        lambert: 0.9,
-        ambient: 0.0,
-        radius: 0.2
-    },
-    // small moon
-    {
-        type: 'sphere',
-        point: {
-            x: -4,
-            y: 3,
-            z: -1
-        },
-        color: {
-            x: 50,
-            y: 100,
-            z: 255
-        },
-        specular: 0.2,
-        lambert: 0.7,
-        ambient: 0.1,
-        radius: 0.1
-    }
-];
 
 // # Throwing Rays
 function render(scene) {
