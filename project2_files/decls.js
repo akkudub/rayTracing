@@ -23,3 +23,7 @@
 Vector.UP = { x: 0, y: 1, z: 0 };
 Vector.ZERO = { x: 0, y: 0, z: 0 };
 Vector.WHITE = { x: 255, y: 255, z: 255 };
+
+var Vector_UP = [0, 1, 0];
+var Vector_ZERO = [0, 0, 0];
+var Vector_WHITE = [255, 255, 255];
