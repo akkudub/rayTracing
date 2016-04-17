@@ -155,55 +155,10 @@ function trace(ray, scene, depth) {
         sphr_normal_z /= sphr_normal_len;
     sphr_normal = {x:sphr_normal_x, y:sphr_normal_y, z:sphr_normal_z};
 
-    return surface(ray, scene, object, pointAtTime, sphr_normal, depth);
+    // return surface(ray, scene, object, pointAtTime, sphr_normal, depth);
     
     // return surface(ray, scene, object, pointAtTime, sphereNormal(object, pointAtTime), depth);
-}
 
-// # Detecting collisions against all objects
-function intersectScene(ray, scene) {
-
-    var closest = [Infinity, null];
-
-    for (var i = 0; i < scene.objects.length; i++) {
-        var object = scene.objects[i],
-            dist = sphereIntersection(object, ray);
-        if (dist !== undefined && dist < closest[0]) {
-            closest = [dist, object];
-        }
-    }
-    return closest;
-}
-
-// ## Detecting collisions against a sphere
-function sphereIntersection(sphere, ray) {
-    // var eye_to_center = Vector.subtract(sphere.point, ray.point),
-    var eye_to_center,
-    // subtract
-        eye_to_center_x = sphere.point.x - ray.point.x,
-        eye_to_center_y = sphere.point.y - ray.point.y,
-        eye_to_center_z = sphere.point.z - ray.point.z;
-    eye_to_center = {x:eye_to_center_x, y:eye_to_center_y, z:eye_to_center_z};
-
-    var v = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
-            ray.vector.x, ray.vector.y, ray.vector.z),
-        eoDot = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
-                eye_to_center.x, eye_to_center.y, eye_to_center.z),
-        discriminant = (sphere.radius * sphere.radius) - eoDot + (v * v);
-    if (discriminant < 0) {
-        return;
-    } else {
-        return v - Math.sqrt(discriminant);
-    }
-}
-
-// function sphereNormal(a, b) {
-//     return Vector.unitVector(
-//         Vector.subtract(b, a.point));
-// }
-
-// # Surface
-function surface(ray, scene, object, pointAtTime, normal, depth) {
     var b = object.color,
         c = Vector.ZERO,
         lambertAmount = 0;
@@ -214,7 +169,7 @@ function surface(ray, scene, object, pointAtTime, normal, depth) {
 
             if (!isLightVisible(pointAtTime, scene, lightPoint)) continue;
             var contribution = Vector.dotProduct(Vector.unitVector(
-                Vector.subtract(lightPoint, pointAtTime)), normal);
+                Vector.subtract(lightPoint, pointAtTime)), sphr_normal);
 
             if (contribution > 0) lambertAmount += contribution;
         }
@@ -223,7 +178,7 @@ function surface(ray, scene, object, pointAtTime, normal, depth) {
     if (object.specular) {
         var reflectedRay = {
             point: pointAtTime,
-            vector: Vector.reflectThrough(ray.vector, normal)
+            vector: Vector.reflectThrough(ray.vector, sphr_normal)
         };
         var reflectedColor = trace(reflectedRay, scene, ++depth);
         if (reflectedColor) {
@@ -236,7 +191,104 @@ function surface(ray, scene, object, pointAtTime, normal, depth) {
     return Vector.add3(c,
         Vector.scale(b, lambertAmount * object.lambert),
         Vector.scale(b, object.ambient));
+
 }
+
+// # Detecting collisions against all objects
+function intersectScene(ray, scene) {
+
+    var closest = [Infinity, null];
+
+    for (var i = 0; i < scene.objects.length; i++) {
+        var object = scene.objects[i], dist;
+        // dist = sphereIntersection(object, ray);
+        // sphere intersection shit
+        var eye_to_center,
+        // subtract
+            eye_to_center_x = object.point.x - ray.point.x,
+            eye_to_center_y = object.point.y - ray.point.y,
+            eye_to_center_z = object.point.z - ray.point.z;
+        eye_to_center = {x:eye_to_center_x, y:eye_to_center_y, z:eye_to_center_z};
+
+        var v = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
+                ray.vector.x, ray.vector.y, ray.vector.z),
+            eoDot = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
+                    eye_to_center.x, eye_to_center.y, eye_to_center.z),
+            discriminant = (object.radius * object.radius) - eoDot + (v * v);
+        if (discriminant < 0) {
+        } else {
+            dist = v - Math.sqrt(discriminant);
+        }
+
+        if (dist !== undefined && dist < closest[0]) {
+            closest = [dist, object];
+        }
+    }
+    return closest;
+}
+
+// ## Detecting collisions against a sphere
+// function sphereIntersection(sphere, ray) {
+//     // var eye_to_center = Vector.subtract(sphere.point, ray.point),
+//     var eye_to_center,
+//     // subtract
+//         eye_to_center_x = sphere.point.x - ray.point.x,
+//         eye_to_center_y = sphere.point.y - ray.point.y,
+//         eye_to_center_z = sphere.point.z - ray.point.z;
+//     eye_to_center = {x:eye_to_center_x, y:eye_to_center_y, z:eye_to_center_z};
+
+//     var v = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
+//             ray.vector.x, ray.vector.y, ray.vector.z),
+//         eoDot = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
+//                 eye_to_center.x, eye_to_center.y, eye_to_center.z),
+//         discriminant = (sphere.radius * sphere.radius) - eoDot + (v * v);
+//     if (discriminant < 0) {
+//         return;
+//     } else {
+//         return v - Math.sqrt(discriminant);
+//     }
+// }
+
+// function sphereNormal(a, b) {
+//     return Vector.unitVector(
+//         Vector.subtract(b, a.point));
+// }
+
+// # Surface
+// function surface(ray, scene, object, pointAtTime, normal, depth) {
+//     var b = object.color,
+//         c = Vector.ZERO,
+//         lambertAmount = 0;
+
+//     if (object.lambert) {
+//         for (var i = 0; i < scene.lights.length; i++) {
+//             var lightPoint = scene.lights[0];
+
+//             if (!isLightVisible(pointAtTime, scene, lightPoint)) continue;
+//             var contribution = Vector.dotProduct(Vector.unitVector(
+//                 Vector.subtract(lightPoint, pointAtTime)), normal);
+
+//             if (contribution > 0) lambertAmount += contribution;
+//         }
+//     }
+
+//     if (object.specular) {
+//         var reflectedRay = {
+//             point: pointAtTime,
+//             vector: Vector.reflectThrough(ray.vector, normal)
+//         };
+//         var reflectedColor = trace(reflectedRay, scene, ++depth);
+//         if (reflectedColor) {
+//             c = Vector.add(c, Vector.scale(reflectedColor, object.specular));
+//         }
+//     }
+
+//     lambertAmount = Math.min(1, lambertAmount);
+
+//     return Vector.add3(c,
+//         Vector.scale(b, lambertAmount * object.lambert),
+//         Vector.scale(b, object.ambient));
+// }
 
 function isLightVisible(pt, scene, light) {
     var distObject =  intersectScene({
