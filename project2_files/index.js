@@ -97,15 +97,15 @@ function render(scene) {
             var ray_v_x = eyeVector_x + xcomp_x + ycomp_x,
                 ray_v_y = eyeVector_y + xcomp_y + ycomp_y,
                 ray_v_z = eyeVector_z + xcomp_z + ycomp_z;
-                // unit vector
+            // unit vector
             var ray_v_len = Vector_length(ray_v_x,ray_v_y,ray_v_z);
                 ray_v_x /= ray_v_len;
                 ray_v_y /= ray_v_len;
                 ray_v_z /= ray_v_len;
             ray.vector = {x:ray_v_x, y:ray_v_y, z:ray_v_z};
 
-
             color = trace(ray, scene, 0);
+
             index = (x * 4) + (y * width * 4),
             data.data[index + 0] = color.x;
             data.data[index + 1] = color.y;
@@ -129,9 +129,35 @@ function trace(ray, scene, depth) {
     var dist = distObject[0],
         object = distObject[1];
 
-    var pointAtTime = Vector.add(ray.point, Vector.scale(ray.vector, dist));
+    // var pointAtTime = Vector.add(ray.point, Vector.scale(ray.vector, dist));
+    var pointAtTime, pointAtTime_x, pointAtTime_y, pointAtTime_z;
+    // scaling first
+        pointAtTime_x = ray.vector.x * dist;
+        pointAtTime_y = ray.vector.y * dist;
+        pointAtTime_z = ray.vector.z * dist;
+    //adding
+        pointAtTime_x += ray.point.x;
+        pointAtTime_y += ray.point.y;
+        pointAtTime_z += ray.point.z;
+    pointAtTime = {x:pointAtTime_x, y:pointAtTime_y, z:pointAtTime_z};
 
-    return surface(ray, scene, object, pointAtTime, sphereNormal(object, pointAtTime), depth);
+    // calculating sphere normal first
+    var sphr_normal, sphr_normal_x, sphr_normal_y, sphr_normal_z;
+        //     return Vector.unitVector(Vector.subtract(b, a.point));
+        // subtract
+        sphr_normal_x = pointAtTime_x - object.point.x;
+        sphr_normal_y = pointAtTime_y - object.point.y;
+        sphr_normal_z = pointAtTime_z - object.point.z;
+        // unit vector
+    var sphr_normal_len = Vector_length(sphr_normal_x,sphr_normal_y,sphr_normal_z);
+        sphr_normal_x /= sphr_normal_len;
+        sphr_normal_y /= sphr_normal_len;
+        sphr_normal_z /= sphr_normal_len;
+    sphr_normal = {x:sphr_normal_x, y:sphr_normal_y, z:sphr_normal_z};
+
+    return surface(ray, scene, object, pointAtTime, sphr_normal, depth);
+    
+    // return surface(ray, scene, object, pointAtTime, sphereNormal(object, pointAtTime), depth);
 }
 
 // # Detecting collisions against all objects
@@ -151,9 +177,18 @@ function intersectScene(ray, scene) {
 
 // ## Detecting collisions against a sphere
 function sphereIntersection(sphere, ray) {
-    var eye_to_center = Vector.subtract(sphere.point, ray.point),
-        v = Vector.dotProduct(eye_to_center, ray.vector),
-        eoDot = Vector.dotProduct(eye_to_center, eye_to_center),
+    // var eye_to_center = Vector.subtract(sphere.point, ray.point),
+    var eye_to_center,
+    // subtract
+        eye_to_center_x = sphere.point.x - ray.point.x,
+        eye_to_center_y = sphere.point.y - ray.point.y,
+        eye_to_center_z = sphere.point.z - ray.point.z;
+    eye_to_center = {x:eye_to_center_x, y:eye_to_center_y, z:eye_to_center_z};
+
+    var v = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
+            ray.vector.x, ray.vector.y, ray.vector.z),
+        eoDot = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
+                eye_to_center.x, eye_to_center.y, eye_to_center.z),
         discriminant = (sphere.radius * sphere.radius) - eoDot + (v * v);
     if (discriminant < 0) {
         return;
@@ -162,10 +197,10 @@ function sphereIntersection(sphere, ray) {
     }
 }
 
-function sphereNormal(sphere, pos) {
-    return Vector.unitVector(
-        Vector.subtract(pos, sphere.point));
-}
+// function sphereNormal(a, b) {
+//     return Vector.unitVector(
+//         Vector.subtract(b, a.point));
+// }
 
 // # Surface
 function surface(ray, scene, object, pointAtTime, normal, depth) {

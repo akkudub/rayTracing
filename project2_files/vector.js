@@ -74,6 +74,8 @@ var Vector_length = function(a_x, a_y, a_z) {
     return Math.sqrt(Vector_dotProduct(a_x, a_y, a_z, a_x, a_y, a_z));
 };
 
+
+// this section is for reference
 //cross
 var res_x, res_y, res_z;
 var a_x, a_y, a_z, b_x, b_y, b_z;
