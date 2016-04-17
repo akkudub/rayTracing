@@ -22,7 +22,6 @@ function render(scene) {
     //     vpRight = Vector.unitVector(Vector.crossProduct(eyeVector, Vector.UP)),
     //     vpUp = Vector.unitVector(Vector.crossProduct(vpRight, eyeVector));
 
-    var eyeVector, vpRight, vpUp;
     // subtract
     var eyeVector_x = camera.vector.x - camera.point.x,
         eyeVector_y = camera.vector.y - camera.point.y,
@@ -32,29 +31,26 @@ function render(scene) {
         eyeVector_x /= eyeVector_len;
         eyeVector_y /= eyeVector_len;
         eyeVector_z /= eyeVector_len;
-    eyeVector = {x:eyeVector_x, y:eyeVector_y, z:eyeVector_z};
    
     // cross product
-    var vpRight_x = (eyeVector.y * Vector.UP.z) - (eyeVector.z * Vector.UP.y),
-        vpRight_y = (eyeVector.z * Vector.UP.x) - (eyeVector.x * Vector.UP.z),
-        vpRight_z = (eyeVector.x * Vector.UP.y) - (eyeVector.y * Vector.UP.x);
+    var vpRight_x = (eyeVector_y * Vector_UP_z) - (eyeVector_z * Vector_UP_y),
+        vpRight_y = (eyeVector_z * Vector_UP_x) - (eyeVector_x * Vector_UP_z),
+        vpRight_z = (eyeVector_x * Vector_UP_y) - (eyeVector_y * Vector_UP_x);
     // unit vector
     var vpRight_len = Vector_length(vpRight_x,vpRight_y,vpRight_z);
         vpRight_x /= vpRight_len;
         vpRight_y /= vpRight_len;
         vpRight_z /= vpRight_len;
-    vpRight = {x:vpRight_x, y:vpRight_y, z:vpRight_z};
     
     // cross product
-    var vpUp_x = (vpRight.y * eyeVector.z) - (vpRight.z * eyeVector.y),
-        vpUp_y =  (vpRight.z * eyeVector.x) - (vpRight.x * eyeVector.z),
-        vpUp_z =  (vpRight.x * eyeVector.y) - (vpRight.y * eyeVector.x);
+    var vpUp_x = (vpRight_y * eyeVector_z) - (vpRight_z * eyeVector_y),
+        vpUp_y =  (vpRight_z * eyeVector_x) - (vpRight_x * eyeVector_z),
+        vpUp_z =  (vpRight_x * eyeVector_y) - (vpRight_y * eyeVector_x);
     // unit vector
     var vpUp_len = Vector_length(vpUp_x,vpUp_y,vpUp_z);
         vpUp_x /= vpUp_len;
         vpUp_y /= vpUp_len;
         vpUp_z /= vpUp_len;
-    vpUp = {x:vpUp_x, y:vpUp_y, z:vpUp_z};
 
     var fovRadians = Math.PI * (camera.fieldOfView / 2) / 180,
         heightWidthRatio = height / width,
@@ -76,22 +72,18 @@ function render(scene) {
             //     ycomp = Vector.scale(vpUp, (y * pixelHeight) - halfHeight);
 
             // ray.vector = Vector.unitVector(Vector.add3(eyeVector, xcomp, ycomp));
-            
-            var xcomp, ycomp;
 
             // scale
             var xfactor = (x * pixelWidth) - halfWidth,
                 xcomp_x = vpRight_x * xfactor,
                 xcomp_y = vpRight_y * xfactor,
                 xcomp_z = vpRight_z * xfactor;
-            xcomp = {x:xcomp_x, y:xcomp_y, z:xcomp_z};
 
             // scale
             var yfactor = (y * pixelHeight) - halfHeight,
                 ycomp_x = vpUp_x * yfactor,
                 ycomp_y = vpUp_y * yfactor,
                 ycomp_z = vpUp_z * yfactor;
-            ycomp = {x:ycomp_x, y:ycomp_y, z:ycomp_z};
 
             // add
             var ray_v_x = eyeVector_x + xcomp_x + ycomp_x,
@@ -105,6 +97,12 @@ function render(scene) {
             ray.vector = {x:ray_v_x, y:ray_v_y, z:ray_v_z};
 
             color = trace(ray, scene, 0);
+
+            // tracing begins:
+
+
+
+
 
             index = (x * 4) + (y * width * 4),
             data.data[index + 0] = color.x;
@@ -120,7 +118,38 @@ function render(scene) {
 function trace(ray, scene, depth) {
     if (depth > 3) return;
 
-    var distObject = intersectScene(ray, scene);
+
+    // intersectscene for calculating the distobject
+    var closest = [Infinity, null];
+
+    for (var i = 0; i < scene.objects.length; i++) {
+        var object = scene.objects[i], dist;
+        // dist = sphereIntersection(object, ray);
+
+        // sphere intersection
+        // subtract
+        var eye_to_center_x = object.point.x - ray.point.x,
+            eye_to_center_y = object.point.y - ray.point.y,
+            eye_to_center_z = object.point.z - ray.point.z;
+
+        var v = Vector_dotProduct(eye_to_center_x, eye_to_center_y, eye_to_center_z,
+                ray.vector.x, ray.vector.y, ray.vector.z),
+            eoDot = Vector_dotProduct(eye_to_center_x, eye_to_center_y, eye_to_center_z,
+                    eye_to_center_x, eye_to_center_y, eye_to_center_z),
+            discriminant = (object.radius * object.radius) - eoDot + (v * v);
+        if (discriminant < 0) {
+        } else {
+            dist = v - Math.sqrt(discriminant);
+        }
+        //
+
+        if (dist !== undefined && dist < closest[0]) {
+            closest = [dist, object];
+        }
+    }
+
+    var distObject = closest;
+    /////
 
     if (distObject[0] === Infinity) {
         return Vector.WHITE;
@@ -155,147 +184,129 @@ function trace(ray, scene, depth) {
         sphr_normal_z /= sphr_normal_len;
     sphr_normal = {x:sphr_normal_x, y:sphr_normal_y, z:sphr_normal_z};
 
-    // return surface(ray, scene, object, pointAtTime, sphr_normal, depth);
-    
-    // return surface(ray, scene, object, pointAtTime, sphereNormal(object, pointAtTime), depth);
-
-    var b = object.color,
-        c = Vector.ZERO,
+    // suraface calculation
+    var b_x = object.color.x,
+        b_y = object.color.y,
+        b_z = object.color.z,
+        c_x = Vector_ZERO_x,
+        c_y = Vector_ZERO_y,
+        c_z = Vector_ZERO_z,
         lambertAmount = 0;
 
     if (object.lambert) {
         for (var i = 0; i < scene.lights.length; i++) {
-            var lightPoint = scene.lights[0];
+            var lightPoint = scene.lights[0],
+                isLightVisible;
 
-            if (!isLightVisible(pointAtTime, scene, lightPoint)) continue;
-            var contribution = Vector.dotProduct(Vector.unitVector(
-                Vector.subtract(lightPoint, pointAtTime)), sphr_normal);
+            // islightvisible
+            var diff_x = pointAtTime_x - lightPoint.x,
+                diff_y = pointAtTime_y - lightPoint.y,
+                diff_z = pointAtTime_z - lightPoint.z,
+                diff_len = Vector_length(diff_x, diff_y, diff_z);
+                diff_x /= diff_len;
+                diff_y /= diff_len;
+                diff_z /= diff_len;
+
+                // intersectscene for distobject
+                var scene_ray = {point: pointAtTime, vector: {x:diff_x, y:diff_y, z:diff_z}};
+                closest = [Infinity, null];
+
+                for (var i = 0; i < scene.objects.length; i++) {
+                    object = scene.objects[i], dist;
+                    // dist = sphereIntersection(object, ray);
+
+                    // sphere intersection
+                    // subtract
+                    eye_to_center_x = object.point.x - scene_ray.point.x,
+                    eye_to_center_y = object.point.y - scene_ray.point.y,
+                    eye_to_center_z = object.point.z - scene_ray.point.z;
+
+                    v = Vector_dotProduct(eye_to_center_x, eye_to_center_y, eye_to_center_z,
+                            scene_ray.vector.x, scene_ray.vector.y, scene_ray.vector.z),
+                    eoDot = Vector_dotProduct(eye_to_center_x, eye_to_center_y, eye_to_center_z,
+                                eye_to_center_x, eye_to_center_y, eye_to_center_z),
+                        discriminant = (object.radius * object.radius) - eoDot + (v * v);
+                    if (discriminant < 0) {
+                    } else {
+                        dist = v - Math.sqrt(discriminant);
+                    }
+                    //
+
+                    if (dist !== undefined && dist < closest[0]) {
+                        closest = [dist, object];
+                    }
+                }
+
+                distObject = closest;
+                ////////
+
+            isLightVisible = distObject[0] > -0.005;
+            //
+
+            if (!isLightVisible) continue;
+            // subtract first
+                diff_x = lightPoint.x - pointAtTime_x,
+                diff_y = lightPoint.y - pointAtTime_y,
+                diff_z = lightPoint.z - pointAtTime_z,
+                diff_len = Vector_length(diff_x, diff_y, diff_z);
+                diff_x /= diff_len;
+                diff_y /= diff_len;
+                diff_z /= diff_len;
+
+                contribution = Vector_dotProduct(diff_x, diff_y, diff_z, sphr_normal_x,sphr_normal_y,sphr_normal_z);
 
             if (contribution > 0) lambertAmount += contribution;
         }
     }
 
     if (object.specular) {
+        // calculating reflected normal
+        var reflectedRay_vector_x, reflectedRay_vector_y, reflectedRay_vector_z;
+            //dotproduct
+            var scale_factor = Vector_dotProduct(ray.vector.x, ray.vector.y, ray.vector.z, sphr_normal_x, sphr_normal_y, sphr_normal_z);
+            //scale
+            var temp_x, temp_y, temp_z;
+
+            temp_x = sphr_normal_x * scale_factor;
+            temp_y = sphr_normal_y * scale_factor;
+            temp_z = sphr_normal_z * scale_factor;
+
+            //scale 2nd
+            temp_x = ray.vector.x * 2;
+            temp_y = ray.vector.y * 2;
+            temp_z = ray.vector.z * 2;
+
+            //subtract
+            reflectedRay_vector_x = temp_x - ray.vector.x;
+            reflectedRay_vector_y = temp_y - ray.vector.y;
+            reflectedRay_vector_z = temp_z - ray.vector.z;
+        //
+
         var reflectedRay = {
             point: pointAtTime,
-            vector: Vector.reflectThrough(ray.vector, sphr_normal)
+            vector: {x:reflectedRay_vector_x ,y:reflectedRay_vector_y ,z:reflectedRay_vector_z}
         };
         var reflectedColor = trace(reflectedRay, scene, ++depth);
         if (reflectedColor) {
-            c = Vector.add(c, Vector.scale(reflectedColor, object.specular));
+            //scale and add
+            c_x += reflectedColor.x * object.specular;
+            c_y += reflectedColor.y * object.specular;
+            c_z += reflectedColor.z * object.specular;
         }
     }
 
     lambertAmount = Math.min(1, lambertAmount);
 
-    return Vector.add3(c,
-        Vector.scale(b, lambertAmount * object.lambert),
-        Vector.scale(b, object.ambient));
+    // scale 1
+    c_x += b_x * lambertAmount * object.lambert;
+    c_y += b_y * lambertAmount * object.lambert;
+    c_z += b_z * lambertAmount * object.lambert;
+    // scale 2
+    c_x += b_x * object.ambient;
+    c_y += b_y * object.ambient;
+    c_z += b_z * object.ambient;
 
-}
-
-// # Detecting collisions against all objects
-function intersectScene(ray, scene) {
-
-    var closest = [Infinity, null];
-
-    for (var i = 0; i < scene.objects.length; i++) {
-        var object = scene.objects[i], dist;
-        // dist = sphereIntersection(object, ray);
-        // sphere intersection shit
-        var eye_to_center,
-        // subtract
-            eye_to_center_x = object.point.x - ray.point.x,
-            eye_to_center_y = object.point.y - ray.point.y,
-            eye_to_center_z = object.point.z - ray.point.z;
-        eye_to_center = {x:eye_to_center_x, y:eye_to_center_y, z:eye_to_center_z};
-
-        var v = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
-                ray.vector.x, ray.vector.y, ray.vector.z),
-            eoDot = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
-                    eye_to_center.x, eye_to_center.y, eye_to_center.z),
-            discriminant = (object.radius * object.radius) - eoDot + (v * v);
-        if (discriminant < 0) {
-        } else {
-            dist = v - Math.sqrt(discriminant);
-        }
-
-        if (dist !== undefined && dist < closest[0]) {
-            closest = [dist, object];
-        }
-    }
-    return closest;
-}
-
-// ## Detecting collisions against a sphere
-// function sphereIntersection(sphere, ray) {
-//     // var eye_to_center = Vector.subtract(sphere.point, ray.point),
-//     var eye_to_center,
-//     // subtract
-//         eye_to_center_x = sphere.point.x - ray.point.x,
-//         eye_to_center_y = sphere.point.y - ray.point.y,
-//         eye_to_center_z = sphere.point.z - ray.point.z;
-//     eye_to_center = {x:eye_to_center_x, y:eye_to_center_y, z:eye_to_center_z};
-
-//     var v = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
-//             ray.vector.x, ray.vector.y, ray.vector.z),
-//         eoDot = Vector_dotProduct(eye_to_center.x, eye_to_center.y, eye_to_center.z,
-//                 eye_to_center.x, eye_to_center.y, eye_to_center.z),
-//         discriminant = (sphere.radius * sphere.radius) - eoDot + (v * v);
-//     if (discriminant < 0) {
-//         return;
-//     } else {
-//         return v - Math.sqrt(discriminant);
-//     }
-// }
-
-// function sphereNormal(a, b) {
-//     return Vector.unitVector(
-//         Vector.subtract(b, a.point));
-// }
-
-// # Surface
-// function surface(ray, scene, object, pointAtTime, normal, depth) {
-//     var b = object.color,
-//         c = Vector.ZERO,
-//         lambertAmount = 0;
-
-//     if (object.lambert) {
-//         for (var i = 0; i < scene.lights.length; i++) {
-//             var lightPoint = scene.lights[0];
-
-//             if (!isLightVisible(pointAtTime, scene, lightPoint)) continue;
-//             var contribution = Vector.dotProduct(Vector.unitVector(
-//                 Vector.subtract(lightPoint, pointAtTime)), normal);
-
-//             if (contribution > 0) lambertAmount += contribution;
-//         }
-//     }
-
-//     if (object.specular) {
-//         var reflectedRay = {
-//             point: pointAtTime,
-//             vector: Vector.reflectThrough(ray.vector, normal)
-//         };
-//         var reflectedColor = trace(reflectedRay, scene, ++depth);
-//         if (reflectedColor) {
-//             c = Vector.add(c, Vector.scale(reflectedColor, object.specular));
-//         }
-//     }
-
-//     lambertAmount = Math.min(1, lambertAmount);
-
-//     return Vector.add3(c,
-//         Vector.scale(b, lambertAmount * object.lambert),
-//         Vector.scale(b, object.ambient));
-// }
-
-function isLightVisible(pt, scene, light) {
-    var distObject =  intersectScene({
-        point: pt,
-        vector: Vector.unitVector(Vector.subtract(pt, light))
-    }, scene);
-    return distObject[0] > -0.005;
+    return {x:c_x, y:c_y, z:c_z};
 }
 
 var planet1 = 0,
