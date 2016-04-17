@@ -1,22 +1,3 @@
-   // var camera = [
-   //    0,1,2,                     // x,y,z coordinates                                                                                   
-   //    4,4,4,                     // Direction normal vector                                                                             
-   //    45                         // field of view : example 45                                                                          
-   // ];
-
-   // var lights = [
-   //    2,                         // number of lights                                                                                    
-   //    200,200,200, 0,1,0,        // light 1, x,y,z location, and rgb colour (green)                                                     
-   //    100,100,100, 1,1,1,        // light 2, x,y,z location, and rgb colour (white)                                                     
-   // ];
-
-   // var objects = [
-   //    2,                                                                             // number of objects                               
-   //    ObjTyp.SPHERE,      13, 1.0,0.0,0.0,0.2,0.7,0.1,1.0, 100,500,500,40,           // typ,recsz,r,g,b,spec,lamb,amb,opac, x,y,z,rad,           
-   //    ObjTyp.SPHERE,      13, 0.0,0.0,1.0,0.2,0.7,0.1,1.0, 200,600,200,20            // typ,recsz,r,g,b,spec,lamb,amb,opac, x,y,z,rad,            
-
-   // ]
-
 // # The Scene
 var scene = {};
 
@@ -101,27 +82,27 @@ scene.objects = [
 ];
 
 
-// ## The Camera
-// 0:x, 1:y, 2:z, 3:x_normal, 4:y_normal, 5:z_normal, 6:fov
-var scene_camera = [
-   0,1.8,10,   //x, y, z
-   0,3,0,      //x, y, z of vector
-   45          //fov
-];
+// // ## The Camera
+// // 0:x, 1:y, 2:z, 3:x_normal, 4:y_normal, 5:z_normal, 6:fov
+// var scene_camera = [
+//    0,1.8,10,   //x, y, z
+//    0,3,0,      //x, y, z of vector
+//    45          //fov
+// ];
 
-// ## Lights
-// 0:x, 1:y, 2:z
-var scene_lights = [
-    -30, -10, 20
-];
+// // ## Lights
+// // 0:x, 1:y, 2:z
+// var scene_lights = [
+//     -30, -10, 20
+// ];
 
-// ## Objects
-// 3 cols
-var scene_objects = [
-   // [0]earth           [1]x,[2]y,[3]z, [4]R,[5]G,[6]B, [7]spec,[8]lamb,[9]amb,[10]rad
-   [ObjTyp.SPHERE,        0, 3.5,-3,     200, 100, 100,   0.2,    0.7,     0.1,  3.0],
-   // [0]big moon        [1]x,[2]y,[3]z, [4]R,[5]G,[6]B, [7]spec,[8]lamb,[9]amb,[10]rad
-   [ObjTyp.SPHERE,        -4, 3,-1,      155, 200, 0,     0.1,    0.9,     0.0,  0.2],
-   // [0]small moon      [1]x,[2]y,[3]z, [4]R,[5]G,[6]B, [7]spec,[8]lamb,[9]amb,[10]rad
-   [ObjTyp.SPHERE,        -4, 3,-1,      50, 100, 255,    0.2,    0.7,     0.1,  0.1]
-];
+// // ## Objects
+// // 3 cols
+// var scene_objects = [
+//    // [0]earth           [1]x,[2]y,[3]z, [4]R,[5]G,[6]B, [7]spec,[8]lamb,[9]amb,[10]rad
+//    [ObjTyp.SPHERE,        0, 3.5,-3,     200, 100, 100,   0.2,    0.7,     0.1,  3.0],
+//    // [0]big moon        [1]x,[2]y,[3]z, [4]R,[5]G,[6]B, [7]spec,[8]lamb,[9]amb,[10]rad
+//    [ObjTyp.SPHERE,        -4, 3,-1,      155, 200, 0,     0.1,    0.9,     0.0,  0.2],
+//    // [0]small moon      [1]x,[2]y,[3]z, [4]R,[5]G,[6]B, [7]spec,[8]lamb,[9]amb,[10]rad
+//    [ObjTyp.SPHERE,        -4, 3,-1,      50, 100, 255,    0.2,    0.7,     0.1,  0.1]
+// ];

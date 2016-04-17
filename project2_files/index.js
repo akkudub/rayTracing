@@ -18,11 +18,45 @@ function render(scene) {
         objects = scene.objects,
         lights = scene.lights;
 
-    var eyeVector = Vector.unitVector(Vector.subtract(camera.vector, camera.point)),
-        vpRight = Vector.unitVector(Vector.crossProduct(eyeVector, Vector.UP)),
-        vpUp = Vector.unitVector(Vector.crossProduct(vpRight, eyeVector)),
+    // var eyeVector = Vector.unitVector(Vector.subtract(camera.vector, camera.point)),
+    //     vpRight = Vector.unitVector(Vector.crossProduct(eyeVector, Vector.UP)),
+    //     vpUp = Vector.unitVector(Vector.crossProduct(vpRight, eyeVector));
 
-        fovRadians = Math.PI * (camera.fieldOfView / 2) / 180,
+    var eyeVector, vpRight, vpUp;
+    // subtract
+    var eyeVector_x = camera.vector.x - camera.point.x,
+        eyeVector_y = camera.vector.y - camera.point.y,
+        eyeVector_z = camera.vector.z - camera.point.z;
+    // unit vector
+    var eyeVector_len = Vector_length(eyeVector_x,eyeVector_y,eyeVector_z);
+        eyeVector_x /= eyeVector_len;
+        eyeVector_y /= eyeVector_len;
+        eyeVector_z /= eyeVector_len;
+        eyeVector = {x:eyeVector_x, y:eyeVector_y, z:eyeVector_z};
+   
+    // cross product
+    var vpRight_x = (eyeVector.y * Vector.UP.z) - (eyeVector.z * Vector.UP.y),
+        vpRight_y = (eyeVector.z * Vector.UP.x) - (eyeVector.x * Vector.UP.z),
+        vpRight_z = (eyeVector.x * Vector.UP.y) - (eyeVector.y * Vector.UP.x);
+    // unit vector
+    var vpRight_len = Vector_length(vpRight_x,vpRight_y,vpRight_z);
+        vpRight_x /= vpRight_len;
+        vpRight_y /= vpRight_len;
+        vpRight_z /= vpRight_len;
+        vpRight = {x:vpRight_x, y:vpRight_y, z:vpRight_z};
+    
+    // cross product
+    var vpUp_x = (vpRight.y * eyeVector.z) - (vpRight.z * eyeVector.y),
+        vpUp_y =  (vpRight.z * eyeVector.x) - (vpRight.x * eyeVector.z),
+        vpUp_z =  (vpRight.x * eyeVector.y) - (vpRight.y * eyeVector.x);
+    // unit vector
+    var vpUp_len = Vector_length(vpUp_x,vpUp_y,vpUp_z);
+        vpUp_x /= vpUp_len;
+        vpUp_y /= vpUp_len;
+        vpUp_z /= vpUp_len;
+        vpUp = {x:vpUp_x, y:vpUp_y, z:vpUp_z};
+
+    var fovRadians = Math.PI * (camera.fieldOfView / 2) / 180,
         heightWidthRatio = height / width,
         halfWidth = Math.tan(fovRadians),
         halfHeight = heightWidthRatio * halfWidth,
