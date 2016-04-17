@@ -32,7 +32,7 @@ function render(scene) {
         eyeVector_x /= eyeVector_len;
         eyeVector_y /= eyeVector_len;
         eyeVector_z /= eyeVector_len;
-        eyeVector = {x:eyeVector_x, y:eyeVector_y, z:eyeVector_z};
+    eyeVector = {x:eyeVector_x, y:eyeVector_y, z:eyeVector_z};
    
     // cross product
     var vpRight_x = (eyeVector.y * Vector.UP.z) - (eyeVector.z * Vector.UP.y),
@@ -43,7 +43,7 @@ function render(scene) {
         vpRight_x /= vpRight_len;
         vpRight_y /= vpRight_len;
         vpRight_z /= vpRight_len;
-        vpRight = {x:vpRight_x, y:vpRight_y, z:vpRight_z};
+    vpRight = {x:vpRight_x, y:vpRight_y, z:vpRight_z};
     
     // cross product
     var vpUp_x = (vpRight.y * eyeVector.z) - (vpRight.z * eyeVector.y),
@@ -54,7 +54,7 @@ function render(scene) {
         vpUp_x /= vpUp_len;
         vpUp_y /= vpUp_len;
         vpUp_z /= vpUp_len;
-        vpUp = {x:vpUp_x, y:vpUp_y, z:vpUp_z};
+    vpUp = {x:vpUp_x, y:vpUp_y, z:vpUp_z};
 
     var fovRadians = Math.PI * (camera.fieldOfView / 2) / 180,
         heightWidthRatio = height / width,
@@ -71,10 +71,39 @@ function render(scene) {
     };
     for (var x = 0; x < width; x++) {
         for (var y = 0; y < height; y++) {
-            var xcomp = Vector.scale(vpRight, (x * pixelWidth) - halfWidth),
-                ycomp = Vector.scale(vpUp, (y * pixelHeight) - halfHeight);
 
-            ray.vector = Vector.unitVector(Vector.add3(eyeVector, xcomp, ycomp));
+            // var xcomp = Vector.scale(vpRight, (x * pixelWidth) - halfWidth),
+            //     ycomp = Vector.scale(vpUp, (y * pixelHeight) - halfHeight);
+
+            // ray.vector = Vector.unitVector(Vector.add3(eyeVector, xcomp, ycomp));
+            
+            var xcomp, ycomp;
+
+            // scale
+            var xfactor = (x * pixelWidth) - halfWidth,
+                xcomp_x = vpRight_x * xfactor,
+                xcomp_y = vpRight_y * xfactor,
+                xcomp_z = vpRight_z * xfactor;
+            xcomp = {x:xcomp_x, y:xcomp_y, z:xcomp_z};
+
+            // scale
+            var yfactor = (y * pixelHeight) - halfHeight,
+                ycomp_x = vpUp_x * yfactor,
+                ycomp_y = vpUp_y * yfactor,
+                ycomp_z = vpUp_z * yfactor;
+            ycomp = {x:ycomp_x, y:ycomp_y, z:ycomp_z};
+
+            // add
+            var ray_v_x = eyeVector_x + xcomp_x + ycomp_x,
+                ray_v_y = eyeVector_y + xcomp_y + ycomp_y,
+                ray_v_z = eyeVector_z + xcomp_z + ycomp_z;
+                // unit vector
+            var ray_v_len = Vector_length(ray_v_x,ray_v_y,ray_v_z);
+                ray_v_x /= ray_v_len;
+                ray_v_y /= ray_v_len;
+                ray_v_z /= ray_v_len;
+            ray.vector = {x:ray_v_x, y:ray_v_y, z:ray_v_z};
+
 
             color = trace(ray, scene, 0);
             index = (x * 4) + (y * width * 4),
