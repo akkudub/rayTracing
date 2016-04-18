@@ -51,6 +51,12 @@ function render(mode) {
 
     var task = gpu.createKernel(function(camera, objects, lights){
     // first 'unpack' the arays so gpu.js can understand
+    debugger;
+        var height = this.dimensions.y,
+            width = this.dimensions.x,
+            Vector_UP_x = 0,
+           Vector_UP_y = 1,
+           Vector_UP_z = 0;
         var n_camera_point_x     = camera[0],
             n_camera_point_y     = camera[1],
             n_camera_point_z     = camera[2],
@@ -197,7 +203,7 @@ function render(mode) {
 var planet1 = 0,
     planet2 = 0;
 
-var mykernel = render("gpu");
+var mykernel = render("cpu");
 var mycode   = render("cpu");
 mykernel(camera, objects, lights);
 var canvas = mykernel.getCanvas();
@@ -210,8 +216,8 @@ function renderLoop() {
 
     // make one planet spin a little bit faster than the other, just for
     // effect.
-    planet1 += 0.05;
-    planet2 += 0.08;
+    planet1 += 0.1;
+    planet2 += 0.8;
 
     // set the position of each moon with some trig.
     objects[1][1] = Math.sin(planet1) * 3.5;
@@ -225,13 +231,13 @@ function renderLoop() {
 
     if (selection === 0) {
           mycode(camera, objects, lights);
-          var cv = document.getElementsByTagName("mainCanvas")[0];
+          var cv = document.getElementsByTagName("canvas")[0];
           var bdy = cv.parentNode;
           var newCanvas = mycode.getCanvas();
           bdy.replaceChild(newCanvas, cv);
     } else {
           mykernel(camera, objects, lights);
-          var cv = document.getElementsByTagName("mainCanvas")[0];
+          var cv = document.getElementsByTagName("canvas")[0];
           var bdy = cv.parentNode;
           var newCanvas = mykernel.getCanvas();
           bdy.replaceChild(newCanvas, cv);

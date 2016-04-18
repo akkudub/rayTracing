@@ -163,9 +163,8 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_c_z = 0,
             a_lambertAmount = 0;
 
-        if (a_object_lambert) {
-            var a_isLightVisible;
-
+         if (a_object_lambert>0) {
+            
             // islightvisible
             var a_diff_x = a_pointAtTime_x - lights_x,
                 a_diff_y = a_pointAtTime_y - lights_y,
@@ -239,7 +238,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                     a_eye_to_center_y = a_object_point_y - a_scene_ray_point_y,
                     a_eye_to_center_z = a_object_point_z - a_scene_ray_point_z;
 
-                a_v = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
+                var a_v = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
                         a_scene_ray_vector_x, a_scene_ray_vector_y, a_scene_ray_vector_z),
                     a_eoDot = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
                         a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
@@ -278,12 +277,11 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
-            a_isLightVisible = a_distObject_0 > -0.005;
             //
 
-            if (a_isLightVisible) {
+            if (a_distObject_0 > -0.005) {
                 // subtract first
-                a_diff_x = lights_x - a_pointAtTime_x,
+                var a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
                     a_diff_z = lights_z - a_pointAtTime_z,
                     a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
@@ -291,13 +289,13 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_diff_y /= a_diff_len;
                 a_diff_z /= a_diff_len;
 
-                contribution = Vector_dotProduct(a_diff_x, a_diff_y, a_diff_z, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z);
+                var contribution = Vector_dotProduct(a_diff_x, a_diff_y, a_diff_z, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z);
 
                 if (contribution > 0) a_lambertAmount += contribution;
             }
         }
 
-        if (a_object_specular) {
+         if (a_object_specular>0) {
             // calculating reflected normal
             var a_reflectedRay_vector_x, a_reflectedRay_vector_y, a_reflectedRay_vector_z;
             //dotproduct
@@ -328,7 +326,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 lights_x, lights_y, lights_z, ++depth, color);
 
 
-            if (reflectedColor) {
+             if ( reflectedColor>0){
                 //scale and add
                 if (color == 0) {
                     a_c_x += reflectedColor * a_object_specular;;
@@ -523,9 +521,8 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_c_z = 0,
             a_lambertAmount = 0;
 
-        if (a_object_lambert) {
-            var a_isLightVisible;
-
+         if (a_object_lambert>0) {
+            
             // islightvisible
             var a_diff_x = a_pointAtTime_x - lights_x,
                 a_diff_y = a_pointAtTime_y - lights_y,
@@ -600,7 +597,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                     a_eye_to_center_y = a_object_point_y - a_scene_ray_point_y,
                     a_eye_to_center_z = a_object_point_z - a_scene_ray_point_z;
 
-                a_v = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
+                var a_v = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
                         a_scene_ray_vector_x, a_scene_ray_vector_y, a_scene_ray_vector_z),
                     a_eoDot = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
                         a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
@@ -639,12 +636,11 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
-            a_isLightVisible = a_distObject_0 > -0.005;
             //
 
-            if (a_isLightVisible) {
+            if (a_distObject_0 > -0.005) {
                 // subtract first
-                a_diff_x = lights_x - a_pointAtTime_x,
+                var a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
                     a_diff_z = lights_z - a_pointAtTime_z,
                     a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
@@ -652,13 +648,13 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_diff_y /= a_diff_len;
                 a_diff_z /= a_diff_len;
 
-                contribution = Vector_dotProduct(a_diff_x, a_diff_y, a_diff_z, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z);
+                var contribution = Vector_dotProduct(a_diff_x, a_diff_y, a_diff_z, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z);
 
                 if (contribution > 0) a_lambertAmount += contribution;
             }
         }
 
-        if (a_object_specular) {
+         if (a_object_specular>0) {
             // calculating reflected normal
             var a_reflectedRay_vector_x, a_reflectedRay_vector_y, a_reflectedRay_vector_z;
             //dotproduct
@@ -689,7 +685,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 lights_x, lights_y, lights_z, ++depth, color);
 
 
-            if (reflectedColor) {
+             if ( reflectedColor>0){
                 //scale and add
                 if (color == 0) {
                     a_c_x += reflectedColor * a_object_specular;;
@@ -883,9 +879,8 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_c_z = 0,
             a_lambertAmount = 0;
 
-        if (a_object_lambert) {
-            var a_isLightVisible;
-
+         if (a_object_lambert>0) {
+            
             // islightvisible
             var a_diff_x = a_pointAtTime_x - lights_x,
                 a_diff_y = a_pointAtTime_y - lights_y,
@@ -959,7 +954,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                     a_eye_to_center_y = a_object_point_y - a_scene_ray_point_y,
                     a_eye_to_center_z = a_object_point_z - a_scene_ray_point_z;
 
-                a_v = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
+                var a_v = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
                         a_scene_ray_vector_x, a_scene_ray_vector_y, a_scene_ray_vector_z),
                     a_eoDot = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
                         a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
@@ -998,12 +993,11 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
-            a_isLightVisible = a_distObject_0 > -0.005;
             //
 
-            if (a_isLightVisible) {
+            if (a_distObject_0 > -0.005) {
                 // subtract first
-                a_diff_x = lights_x - a_pointAtTime_x,
+                var a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
                     a_diff_z = lights_z - a_pointAtTime_z,
                     a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
@@ -1011,13 +1005,13 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_diff_y /= a_diff_len;
                 a_diff_z /= a_diff_len;
 
-                contribution = Vector_dotProduct(a_diff_x, a_diff_y, a_diff_z, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z);
+                var contribution = Vector_dotProduct(a_diff_x, a_diff_y, a_diff_z, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z);
 
                 if (contribution > 0) a_lambertAmount += contribution;
             }
         }
 
-        if (a_object_specular) {
+         if (a_object_specular>0) {
             // calculating reflected normal
             var a_reflectedRay_vector_x, a_reflectedRay_vector_y, a_reflectedRay_vector_z;
             //dotproduct
@@ -1048,7 +1042,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 lights_x, lights_y, lights_z, ++depth, color);
 
 
-            if (reflectedColor) {
+             if ( reflectedColor>0){
                 //scale and add
                 if (color == 0) {
                     a_c_x += reflectedColor * a_object_specular;;
@@ -1242,9 +1236,8 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_c_z = 0,
             a_lambertAmount = 0;
 
-        if (a_object_lambert) {
-            var a_isLightVisible;
-
+         if (a_object_lambert>0) {
+            
             // islightvisible
             var a_diff_x = a_pointAtTime_x - lights_x,
                 a_diff_y = a_pointAtTime_y - lights_y,
@@ -1318,7 +1311,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                     a_eye_to_center_y = a_object_point_y - a_scene_ray_point_y,
                     a_eye_to_center_z = a_object_point_z - a_scene_ray_point_z;
 
-                a_v = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
+                var a_v = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
                         a_scene_ray_vector_x, a_scene_ray_vector_y, a_scene_ray_vector_z),
                     a_eoDot = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
                         a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
@@ -1357,12 +1350,11 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
-            a_isLightVisible = a_distObject_0 > -0.005;
             //
 
-            if (a_isLightVisible) {
+            if (a_distObject_0 > -0.005) {
                 // subtract first
-                a_diff_x = lights_x - a_pointAtTime_x,
+                var a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
                     a_diff_z = lights_z - a_pointAtTime_z,
                     a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
@@ -1370,13 +1362,13 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_diff_y /= a_diff_len;
                 a_diff_z /= a_diff_len;
 
-                contribution = Vector_dotProduct(a_diff_x, a_diff_y, a_diff_z, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z);
+                var contribution = Vector_dotProduct(a_diff_x, a_diff_y, a_diff_z, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z);
 
                 if (contribution > 0) a_lambertAmount += contribution;
             }
         }
 
-        if (a_object_specular) {
+         if (a_object_specular>0) {
             // calculating reflected normal
             var a_reflectedRay_vector_x, a_reflectedRay_vector_y, a_reflectedRay_vector_z;
             //dotproduct
@@ -1399,15 +1391,10 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_reflectedRay_vector_z = a_temp_z - a_ray_vector_z;
 
             // recursive call BEGINSSSSSS
-            var reflectedColor = trace_color4(a_pointAtTime_x, a_pointAtTime_y, a_pointAtTime_z,
-                a_reflectedRay_vector_x, a_reflectedRay_vector_y, a_reflectedRay_vector_z,
-                n_objects_0_type, n_objects_0_x, n_objects_0_y, n_objects_0_z, n_objects_0_r, n_objects_0_g, n_objects_0_b, n_objects_0_spec, n_objects_0_lamb, n_objects_0_amb, n_objects_0_rad,
-                n_objects_1_type, n_objects_1_x, n_objects_1_y, n_objects_1_z, n_objects_1_r, n_objects_1_g, n_objects_1_b, n_objects_1_spec, n_objects_1_lamb, n_objects_1_amb, n_objects_1_rad,
-                n_objects_2_type, n_objects_2_x, n_objects_2_y, n_objects_2_z, n_objects_2_r, n_objects_2_g, n_objects_2_b, n_objects_2_spec, n_objects_2_lamb, n_objects_2_amb, n_objects_2_rad,
-                lights_x, lights_y, lights_z, ++depth, color);
+            var reflectedColor = trace_color4(color);
 
 
-            if (reflectedColor) {
+             if ( reflectedColor>0){
                 //scale and add
                 if (color == 0) {
                     a_c_x += reflectedColor * a_object_specular;;
