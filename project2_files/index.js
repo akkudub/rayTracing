@@ -65,9 +65,9 @@ function render(camera, objects, lights) {
         pixelHeight = cameraheight / (height - 1);
 
     var index, color_R, color_G, color_B;
-    var ray = {
-        point: {x:n_camera_point_x, y:n_camera_point_y, z:n_camera_point_z}
-    };
+    var ray_x = n_camera_point_x, 
+        ray_y = n_camera_point_y,
+        ray_z = n_camera_point_z;
     for (var x = 0; x < width; x++) {
         for (var y = 0; y < height; y++) {
 
@@ -92,11 +92,10 @@ function render(camera, objects, lights) {
                 ray_v_x /= ray_v_len;
                 ray_v_y /= ray_v_len;
                 ray_v_z /= ray_v_len;
-            ray.vector = {x:ray_v_x, y:ray_v_y, z:ray_v_z};
 
-            color_R = trace_color(ray, n_objects, n_lights, 0, 0);
-            color_G = trace_color(ray, n_objects, n_lights, 0, 1);
-            color_B = trace_color(ray, n_objects, n_lights, 0, 2);
+            color_R = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects, n_lights, 0, 0);
+            color_G = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects, n_lights, 0, 1);
+            color_B = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects, n_lights, 0, 2);
 
             // tracing begins:
 
@@ -114,15 +113,15 @@ function render(camera, objects, lights) {
     ctx.putImageData(data, 0, 0);
 }
 
-function trace_color(a_ray, objects, lights, depth, color) {
+function trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, objects, lights, depth, color) {
     if (depth > 3)
         return;
-    var a_ray_point_x  = a_ray.point.x ,
-        a_ray_point_y  = a_ray.point.y ,
-        a_ray_point_z  = a_ray.point.z ,
-        a_ray_vector_x = a_ray.vector.x,
-        a_ray_vector_y = a_ray.vector.y,
-        a_ray_vector_z = a_ray.vector.z;
+    var a_ray_point_x  = ray_x ,
+        a_ray_point_y  = ray_y ,
+        a_ray_point_z  = ray_z ,
+        a_ray_vector_x = ray_v_x,
+        a_ray_vector_y = ray_v_y,
+        a_ray_vector_z = ray_v_z;
     // intersectscene for calculating the distobject
         var a_closest_0 = Infinity, a_closest_1_point_x = null,
              a_closest_1_point_y  =  null,
@@ -220,7 +219,7 @@ function trace_color(a_ray, objects, lights, depth, color) {
             a_pointAtTime_z += a_ray_point_z;
 
         // calculating sphere normal first
-        var a_sphr_normal, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z;
+        var a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z;
             // subtract
             a_sphr_normal_x = a_pointAtTime_x - a_object_point_x;
             a_sphr_normal_y = a_pointAtTime_y - a_object_point_y;
@@ -230,7 +229,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
             a_sphr_normal_x /= a_sphr_normal_len;
             a_sphr_normal_y /= a_sphr_normal_len;
             a_sphr_normal_z /= a_sphr_normal_len;
-        a_sphr_normal = {x:a_sphr_normal_x, y:a_sphr_normal_y, z:a_sphr_normal_z};
 
         // suraface calculation
         var a_a_x = a_object_color_x,
@@ -382,7 +380,9 @@ function trace_color(a_ray, objects, lights, depth, color) {
             };
 
             // recursive call BEGINSSSSSS
-            var reflectedColor = trace_color(a_reflectedRay, objects, lights, ++depth, color);
+            var reflectedColor = trace_color(a_pointAtTime_x, a_pointAtTime_y, a_pointAtTime_z,
+                            a_reflectedRay_vector_x ,a_reflectedRay_vector_y ,a_reflectedRay_vector_z,
+                            objects, lights, ++depth, color);
             
 
             if (reflectedColor) {
