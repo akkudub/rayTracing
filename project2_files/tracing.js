@@ -157,9 +157,9 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         var a_a_x = a_object_color_x,
             a_a_y = a_object_color_y,
             a_a_z = a_object_color_z,
-            a_c_x = Vector_ZERO_x,
-            a_c_y = Vector_ZERO_y,
-            a_c_z = Vector_ZERO_z,
+            a_c_x = 0,
+            a_c_y = 0,
+            a_c_z = 0,
             a_lambertAmount = 0;
 
         if (a_object_lambert>0) {
