@@ -64,7 +64,7 @@ function render(camera, objects, lights) {
         pixelWidth = camerawidth / (width - 1),
         pixelHeight = cameraheight / (height - 1);
 
-    var index, color, color_R, color_G, color_B;
+    var index, color_R, color_G, color_B;
     var ray = {
         point: {x:n_camera_point_x, y:n_camera_point_y, z:n_camera_point_z}
     };
@@ -94,8 +94,6 @@ function render(camera, objects, lights) {
                 ray_v_z /= ray_v_len;
             ray.vector = {x:ray_v_x, y:ray_v_y, z:ray_v_z};
 
-            // color = trace(ray, n_objects, n_lights, 0);
-
             color_R = trace_color(ray, n_objects, n_lights, 0, 0);
             color_G = trace_color(ray, n_objects, n_lights, 0, 1);
             color_B = trace_color(ray, n_objects, n_lights, 0, 2);
@@ -107,9 +105,6 @@ function render(camera, objects, lights) {
 
 
             index = (x * 4) + (y * width * 4),
-            // data.data[index + 0] = color.x;
-            // data.data[index + 1] = color.y;
-            // data.data[index + 2] = color.z;
             data.data[index + 0] = color_R;
             data.data[index + 1] = color_G;
             data.data[index + 2] = color_B;
@@ -129,7 +124,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
         a_ray_vector_y = a_ray.vector.y,
         a_ray_vector_z = a_ray.vector.z;
     // intersectscene for calculating the distobject
-    // var a_closest = [Infinity, null];
         var a_closest_0 = Infinity, a_closest_1_point_x = null,
              a_closest_1_point_y  =  null,
              a_closest_1_point_z  = null ,
@@ -142,7 +136,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
              a_closest_1_radius   = null;
 
     for (var i = 0; i < 3; i++) {
-        // var a_object = scene.objects[i], a_dist,
         var a_object_point_x     = objects[i][1],
             a_object_point_y     = objects[i][2] ,
             a_object_point_z     = objects[i][3] ,
@@ -171,7 +164,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
         //
 
         if (a_dist !== undefined && a_dist < a_closest_0) {
-            // a_closest = [a_dist, a_object];
             a_closest_0 = a_dist;
 
              a_closest_1_point_x  = a_object_point_x,
@@ -186,8 +178,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
              a_closest_1_radius   = a_object_radius ;
         }
     }
-
-    // var a_distObject = a_closest;
 
     var a_distObject_0 = a_closest_0;
     var a_distObject_1_point_x  = a_closest_1_point_x,
@@ -206,9 +196,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
         return 200; // whit ish
     }
     else{
-        // var a_dist = a_distObject[0],
-        //     a_object = a_distObject[1],
-
         var a_dist = a_distObject_0,
 
         a_object_point_x     =a_distObject_1_point_x  ,
@@ -222,7 +209,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
         a_object_ambient     =a_distObject_1_ambient   ,
         a_object_radius      =a_distObject_1_radius;
 
-        // var a_pointAtTime = Vector.add(ray.point, Vector.scale(ray.vector, dist));
         var a_pointAtTime_x, a_pointAtTime_y, a_pointAtTime_z;
         // scaling first
             a_pointAtTime_x = a_ray_vector_x * a_dist;
@@ -235,7 +221,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
 
         // calculating sphere normal first
         var a_sphr_normal, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z;
-            //     return Vector.unitVector(Vector.subtract(b, a.point));
             // subtract
             a_sphr_normal_x = a_pointAtTime_x - a_object_point_x;
             a_sphr_normal_y = a_pointAtTime_y - a_object_point_y;
@@ -278,8 +263,7 @@ function trace_color(a_ray, objects, lights, depth, color) {
                 a_scene_ray_vector_x = a_diff_x,
                 a_scene_ray_vector_y = a_diff_y,
                 a_scene_ray_vector_z = a_diff_z;
-            // var a_scene_ray = {point: {x:a_pointAtTime_x, y:a_pointAtTime_y, z:a_pointAtTime_z}, vector: {x:a_diff_x, y:a_diff_y, z:a_diff_z}};
-            // a_closest = [Infinity, null];
+
             var a_closest_0 = Infinity, a_closest_1_point_x = null,
              a_closest_1_point_y  =  null,
              a_closest_1_point_z  = null ,
@@ -292,7 +276,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
              a_closest_1_radius   = null;
 
             for (var i = 0; i < 3; i++) {
-                // a_object = scene.objects[i], a_dist;
 
                 var a_object_point_x     = objects[i][1],
                     a_object_point_y     = objects[i][2] ,
@@ -304,7 +287,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
                     a_object_lambert     = objects[i][8] ,
                     a_object_ambient     = objects[i][9] ,
                     a_object_radius      = objects[i][10];
-                // dist = sphereIntersection(object, ray);
 
                 // sphere intersection
                 // subtract
@@ -339,8 +321,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
                      a_closest_1_radius   = a_object_radius  ;
                 }
             }
-
-            // a_distObject = a_closest;
 
             var a_distObject_0 = a_closest_0;
             var a_distObject_1_point_x  = a_closest_1_point_x,
@@ -433,8 +413,6 @@ function trace_color(a_ray, objects, lights, depth, color) {
             a_c_z += a_a_z * a_object_ambient;
             return a_c_z;
         }
-
-        // return {x:a_c_x, y:a_c_y, z:a_c_z};
     }
 }
 
