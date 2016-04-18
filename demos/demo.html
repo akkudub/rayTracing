@@ -37,13 +37,9 @@
    function dist(x1,y1,x2,y2) {
       return Math.sqrt( sqr(x2-x1)+sqr(y2-y1) );
    }
-   function fuckyou(sup){
-      return sup.x + sup.y + sup.z;
-   }
 
    gpu.addFunction(sqr);
    gpu.addFunction(dist);
-   gpu.addFunction(fuckyou);
 
    function doit(mode) {
       var opt = {
@@ -67,7 +63,7 @@
              if (Objects[idx] == this.constants.SPHERE) { // i.e. if it is a SPHERE...
                 if (dist(this.thread.x,this.thread.y,Objects[idx+9],Objects[idx+10]) < Objects[idx+12]) {
                     this.color(Objects[idx+2],Objects[idx+3],Objects[idx+4]);
-                    var wtf = fuckyou({x:1, y:2, z:3});
+                    // var wtf = {x:1, y:2, z:3};
                 }
              }
          }
