@@ -105,9 +105,11 @@ function render(camera, objects, lights) {
     var ray_x = n_camera_point_x, 
         ray_y = n_camera_point_y,
         ray_z = n_camera_point_z;
-    for (var x = 0; x < width; x++) {
-        for (var y = 0; y < height; y++) {
 
+    var debug_all = [];
+    for (var x = 0; x < width; x++) {
+        var debug_y = []
+        for (var y = 0; y < height; y++) {
             // scale
             var xfactor = (x * pixelWidth) - halfWidth,
                 xcomp_x = vpRight_x * xfactor,
@@ -147,12 +149,18 @@ function render(camera, objects, lights) {
                 n_objects_2_type,n_objects_2_x,n_objects_2_y,n_objects_2_z,n_objects_2_r,n_objects_2_g,n_objects_2_b,n_objects_2_spec,n_objects_2_lamb,n_objects_2_amb,n_objects_2_rad,
                 n_lights_x, n_lights_y, n_lights_z, 0, 2);
 
+            // if (color_G > 116 && color_G < 117) {
+            //     debugger;
+            // }
+            debug_y[y] = {r:color_R, g:color_G, b:color_B};
+
             index = (x * 4) + (y * width * 4),
             data.data[index + 0] = color_R;
             data.data[index + 1] = color_G;
             data.data[index + 2] = color_B;
             data.data[index + 3] = 255;
         }
+        debug_all[x] = debug_y;
     }
     ctx.putImageData(data, 0, 0);
 }
@@ -168,12 +176,12 @@ function renderLoop() {
     planet2 += 0.08;
 
     // set the position of each moon with some trig.
-    objects[1][1] = Math.sin(planet1) * 3.5;
-    objects[1][2] = Math.cos(planet1) * 3.5;
-    objects[1][3] = -3 + (Math.cos(planet1) * 3.5);
+    // objects[1][1] = Math.sin(planet1) * 3.5;
+    // objects[1][2] = Math.cos(planet1) * 3.5;
+    // objects[1][3] = -3 + (Math.cos(planet1) * 3.5);
 
-    objects[2][1] = Math.sin(planet2) * 4;
-    objects[2][3] = -3 + (Math.cos(planet2) * 4);
+    // objects[2][1] = Math.sin(planet2) * 4;
+    // objects[2][3] = -3 + (Math.cos(planet2) * 4);
 
     // finally, render the scene!
     render(camera, objects, lights);
