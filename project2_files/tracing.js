@@ -1399,12 +1399,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_reflectedRay_vector_z = a_temp_z - a_ray_vector_z;
 
             // recursive call BEGINSSSSSS
-            var reflectedColor = trace_color4(a_pointAtTime_x, a_pointAtTime_y, a_pointAtTime_z,
-                a_reflectedRay_vector_x, a_reflectedRay_vector_y, a_reflectedRay_vector_z,
-                n_objects_0_type, n_objects_0_x, n_objects_0_y, n_objects_0_z, n_objects_0_r, n_objects_0_g, n_objects_0_b, n_objects_0_spec, n_objects_0_lamb, n_objects_0_amb, n_objects_0_rad,
-                n_objects_1_type, n_objects_1_x, n_objects_1_y, n_objects_1_z, n_objects_1_r, n_objects_1_g, n_objects_1_b, n_objects_1_spec, n_objects_1_lamb, n_objects_1_amb, n_objects_1_rad,
-                n_objects_2_type, n_objects_2_x, n_objects_2_y, n_objects_2_z, n_objects_2_r, n_objects_2_g, n_objects_2_b, n_objects_2_spec, n_objects_2_lamb, n_objects_2_amb, n_objects_2_rad,
-                lights_x, lights_y, lights_z, ++depth, color);
+            var reflectedColor = trace_color4(color);
 
 
             if (reflectedColor>0) {
@@ -1438,7 +1433,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
     }
 }
 
-function trace_color4() {
+function trace_color4(x) {
     // we do not trace beyond 4 bounces
     return;
 }
