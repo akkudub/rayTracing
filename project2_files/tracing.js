@@ -10,7 +10,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_ray_vector_y = ray_v_y,
         a_ray_vector_z = ray_v_z;
     // intersectscene for calculating the distobject
-    var a_closest_0 = Infinity,
+    var a_closest_0 = 10000000000,
         a_closest_1_point_x = null,
         a_closest_1_point_y = null,
         a_closest_1_point_z = null,
@@ -60,6 +60,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
         // sphere intersection
         // subtract
+        a_dist = -1;
         var a_eye_to_center_x = a_object_point_x - a_ray_point_x,
             a_eye_to_center_y = a_object_point_y - a_ray_point_y,
             a_eye_to_center_z = a_object_point_z - a_ray_point_z;
@@ -74,7 +75,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         }
         //
 
-        if (a_dist !== undefined && a_dist < a_closest_0) {
+        if (a_dist !== -1 && a_dist < a_closest_0) {
             a_closest_0 = a_dist;
 
             a_closest_1_point_x = a_object_point_x,
@@ -103,7 +104,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_distObject_1_radius = a_closest_1_radius;
     /////
 
-    if (a_distObject_0 === Infinity) {
+    if (a_distObject_0 === 10000000000) {
         return 200; // whit ish
     } else {
         var a_dist = a_distObject_0,
@@ -170,7 +171,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_scene_ray_vector_y = a_diff_y,
                 a_scene_ray_vector_z = a_diff_z;
 
-            var a_closest_0 = Infinity,
+            var a_closest_0 = 10000000000,
                 a_closest_1_point_x = null,
                 a_closest_1_point_y = null,
                 a_closest_1_point_z = null,
@@ -197,6 +198,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
                 // sphere intersection
                 // subtract
+                a_dist = -1,
                 a_eye_to_center_x = a_object_point_x - a_scene_ray_point_x,
                     a_eye_to_center_y = a_object_point_y - a_scene_ray_point_y,
                     a_eye_to_center_z = a_object_point_z - a_scene_ray_point_z;
@@ -211,7 +213,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 }
                 //
 
-                if (a_dist !== undefined && a_dist < a_closest_0) {
+                if (a_dist !== -1 && a_dist < a_closest_0) {
                     // a_closest = [a_dist, a_object];
                     a_closest_0 = a_dist;
 
@@ -334,7 +336,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_ray_vector_y = ray_v_y,
         a_ray_vector_z = ray_v_z;
     // intersectscene for calculating the distobject
-    var a_closest_0 = Infinity,
+    var a_closest_0 = 10000000000,
         a_closest_1_point_x = null,
         a_closest_1_point_y = null,
         a_closest_1_point_z = null,
@@ -384,6 +386,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
         // sphere intersection
         // subtract
+        a_dist = -1;
         var a_eye_to_center_x = a_object_point_x - a_ray_point_x,
             a_eye_to_center_y = a_object_point_y - a_ray_point_y,
             a_eye_to_center_z = a_object_point_z - a_ray_point_z;
@@ -398,7 +401,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         }
         //
 
-        if (a_dist !== undefined && a_dist < a_closest_0) {
+        if (a_dist !== -1 && a_dist < a_closest_0) {
             a_closest_0 = a_dist;
 
             a_closest_1_point_x = a_object_point_x,
@@ -427,7 +430,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_distObject_1_radius = a_closest_1_radius;
     /////
 
-    if (a_distObject_0 === Infinity) {
+    if (a_distObject_0 === 10000000000) {
         return 200; // whit ish
     } else {
         var a_dist = a_distObject_0,
@@ -494,7 +497,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_scene_ray_vector_y = a_diff_y,
                 a_scene_ray_vector_z = a_diff_z;
 
-            var a_closest_0 = Infinity,
+            var a_closest_0 = 10000000000,
                 a_closest_1_point_x = null,
                 a_closest_1_point_y = null,
                 a_closest_1_point_z = null,
@@ -521,6 +524,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
                 // sphere intersection
                 // subtract
+                a_dist = -1;
                 a_eye_to_center_x = a_object_point_x - a_scene_ray_point_x,
                     a_eye_to_center_y = a_object_point_y - a_scene_ray_point_y,
                     a_eye_to_center_z = a_object_point_z - a_scene_ray_point_z;
@@ -535,7 +539,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 }
                 //
 
-                if (a_dist !== undefined && a_dist < a_closest_0) {
+                if (a_dist !== -1 && a_dist < a_closest_0) {
                     // a_closest = [a_dist, a_object];
                     a_closest_0 = a_dist;
 
@@ -657,7 +661,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_ray_vector_y = ray_v_y,
         a_ray_vector_z = ray_v_z;
     // intersectscene for calculating the distobject
-    var a_closest_0 = Infinity,
+    var a_closest_0 = 10000000000,
         a_closest_1_point_x = null,
         a_closest_1_point_y = null,
         a_closest_1_point_z = null,
@@ -707,6 +711,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
         // sphere intersection
         // subtract
+        a_dist = -1;
         var a_eye_to_center_x = a_object_point_x - a_ray_point_x,
             a_eye_to_center_y = a_object_point_y - a_ray_point_y,
             a_eye_to_center_z = a_object_point_z - a_ray_point_z;
@@ -721,7 +726,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         }
         //
 
-        if (a_dist !== undefined && a_dist < a_closest_0) {
+        if (a_dist !== -1 && a_dist < a_closest_0) {
             a_closest_0 = a_dist;
 
             a_closest_1_point_x = a_object_point_x,
@@ -750,7 +755,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_distObject_1_radius = a_closest_1_radius;
     /////
 
-    if (a_distObject_0 === Infinity) {
+    if (a_distObject_0 === 10000000000) {
         return 200; // whit ish
     } else {
         var a_dist = a_distObject_0,
@@ -817,7 +822,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_scene_ray_vector_y = a_diff_y,
                 a_scene_ray_vector_z = a_diff_z;
 
-            var a_closest_0 = Infinity,
+            var a_closest_0 = 10000000000,
                 a_closest_1_point_x = null,
                 a_closest_1_point_y = null,
                 a_closest_1_point_z = null,
@@ -844,6 +849,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
                 // sphere intersection
                 // subtract
+                a_dist = -1;
                 a_eye_to_center_x = a_object_point_x - a_scene_ray_point_x,
                     a_eye_to_center_y = a_object_point_y - a_scene_ray_point_y,
                     a_eye_to_center_z = a_object_point_z - a_scene_ray_point_z;
@@ -858,7 +864,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 }
                 //
 
-                if (a_dist !== undefined && a_dist < a_closest_0) {
+                if (a_dist !== -1 && a_dist < a_closest_0) {
                     // a_closest = [a_dist, a_object];
                     a_closest_0 = a_dist;
 
@@ -980,7 +986,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_ray_vector_y = ray_v_y,
         a_ray_vector_z = ray_v_z;
     // intersectscene for calculating the distobject
-    var a_closest_0 = Infinity,
+    var a_closest_0 = 10000000000,
         a_closest_1_point_x = null,
         a_closest_1_point_y = null,
         a_closest_1_point_z = null,
@@ -1030,6 +1036,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
         // sphere intersection
         // subtract
+        a_dist = -1;
         var a_eye_to_center_x = a_object_point_x - a_ray_point_x,
             a_eye_to_center_y = a_object_point_y - a_ray_point_y,
             a_eye_to_center_z = a_object_point_z - a_ray_point_z;
@@ -1044,7 +1051,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         }
         //
 
-        if (a_dist !== undefined && a_dist < a_closest_0) {
+        if (a_dist !== -1 && a_dist < a_closest_0) {
             a_closest_0 = a_dist;
 
             a_closest_1_point_x = a_object_point_x,
@@ -1073,7 +1080,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_distObject_1_radius = a_closest_1_radius;
     /////
 
-    if (a_distObject_0 === Infinity) {
+    if (a_distObject_0 === 10000000000) {
         return 200; // whit ish
     } else {
         var a_dist = a_distObject_0,
@@ -1140,7 +1147,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_scene_ray_vector_y = a_diff_y,
                 a_scene_ray_vector_z = a_diff_z;
 
-            var a_closest_0 = Infinity,
+            var a_closest_0 = 10000000000,
                 a_closest_1_point_x = null,
                 a_closest_1_point_y = null,
                 a_closest_1_point_z = null,
@@ -1167,6 +1174,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
                 // sphere intersection
                 // subtract
+                a_dist = -1;
                 a_eye_to_center_x = a_object_point_x - a_scene_ray_point_x,
                     a_eye_to_center_y = a_object_point_y - a_scene_ray_point_y,
                     a_eye_to_center_z = a_object_point_z - a_scene_ray_point_z;
@@ -1181,7 +1189,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 }
                 //
 
-                if (a_dist !== undefined && a_dist < a_closest_0) {
+                if (a_dist !== -1 && a_dist < a_closest_0) {
                     // a_closest = [a_dist, a_object];
                     a_closest_0 = a_dist;
 
