@@ -51,7 +51,6 @@ function render(mode) {
 
     var task = gpu.createKernel(function(camera, objects, lights){
     // first 'unpack' the arays so gpu.js can understand
-    debugger;
         var height = this.dimensions.y,
             width = this.dimensions.x,
             Vector_UP_x = 0,
@@ -203,7 +202,7 @@ function render(mode) {
 var planet1 = 0,
     planet2 = 0;
 
-var mykernel = render("cpu");
+var mykernel = render("gpu");
 var mycode   = render("cpu");
 mykernel(camera, objects, lights);
 var canvas = mykernel.getCanvas();

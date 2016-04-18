@@ -10,7 +10,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_ray_vector_y = ray_v_y,
         a_ray_vector_z = ray_v_z;
     // intersectscene for calculating the distobject
-    var a_closest_0 = 100000000,
+    var a_closest_0 = 10000000000,
         a_closest_1_point_x = -1,
         a_closest_1_point_y = -1,
         a_closest_1_point_z = -1,
@@ -35,47 +35,46 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
     for (var i = 0; i < 3; i++) {
         if (i == 0) {
-            a_object_point_x = n_objects_0_x;
-            a_object_point_y = n_objects_0_y;
-            a_object_point_z = n_objects_0_z;
-            a_object_color_x = n_objects_0_r;
-            a_object_color_y = n_objects_0_g;
-            a_object_color_z = n_objects_0_b;
-            a_object_specular = n_objects_0_spec;
-            a_object_lambert = n_objects_0_lamb;
-            a_object_ambient = n_objects_0_amb;
-            a_object_radius = n_objects_0_rad;
+                a_object_point_x = n_objects_0_x;
+                a_object_point_y = n_objects_0_y;
+                a_object_point_z = n_objects_0_z;
+                a_object_color_x = n_objects_0_r;
+                a_object_color_y = n_objects_0_g;
+                a_object_color_z = n_objects_0_b;
+                a_object_specular = n_objects_0_spec;
+                a_object_lambert = n_objects_0_lamb;
+                a_object_ambient = n_objects_0_amb;
+                a_object_radius = n_objects_0_rad;
         } else if (i == 1) {
-            a_object_point_x = n_objects_1_x;
-            a_object_point_y = n_objects_1_y;
-            a_object_point_z = n_objects_1_z;
-            a_object_color_x = n_objects_1_r;
-            a_object_color_y = n_objects_1_g;
-            a_object_color_z = n_objects_1_b;
-            a_object_specular = n_objects_1_spec;
-            a_object_lambert = n_objects_1_lamb;
-            a_object_ambient = n_objects_1_amb;
-            a_object_radius = n_objects_1_rad;
+                a_object_point_x = n_objects_1_x;
+                a_object_point_y = n_objects_1_y;
+                a_object_point_z = n_objects_1_z;
+                a_object_color_x = n_objects_1_r;
+                a_object_color_y = n_objects_1_g;
+                a_object_color_z = n_objects_1_b;
+                a_object_specular = n_objects_1_spec;
+                a_object_lambert = n_objects_1_lamb;
+                a_object_ambient = n_objects_1_amb;
+                a_object_radius = n_objects_1_rad;
         } else if (i == 2) {
-            a_object_point_x = n_objects_2_x;
-            a_object_point_y = n_objects_2_y;
-            a_object_point_z = n_objects_2_z;
-            a_object_color_x = n_objects_2_r;
-            a_object_color_y = n_objects_2_g;
-            a_object_color_z = n_objects_2_b;
-            a_object_specular = n_objects_2_spec;
-            a_object_lambert = n_objects_2_lamb;
-            a_object_ambient = n_objects_2_amb;
-            a_object_radius = n_objects_2_rad;
+                a_object_point_x = n_objects_2_x;
+                a_object_point_y = n_objects_2_y;
+                a_object_point_z = n_objects_2_z;
+                a_object_color_x = n_objects_2_r;
+                a_object_color_y = n_objects_2_g;
+                a_object_color_z = n_objects_2_b;
+                a_object_specular = n_objects_2_spec;
+                a_object_lambert = n_objects_2_lamb;
+                a_object_ambient = n_objects_2_amb;
+                a_object_radius = n_objects_2_rad;
         }
 
         // sphere intersection
         // subtract
+        var a_dist = -1;
         var a_eye_to_center_x = a_object_point_x - a_ray_point_x,
             a_eye_to_center_y = a_object_point_y - a_ray_point_y,
             a_eye_to_center_z = a_object_point_z - a_ray_point_z;
-
-        var a_dist = -1;
 
         var a_v = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
                 a_ray_vector_x, a_ray_vector_y, a_ray_vector_z),
@@ -83,7 +82,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
             a_discriminant = (a_object_radius * a_object_radius) - a_eoDot + (a_v * a_v);
         if (a_discriminant < 0) {} else {
-            a_dist = a_v - mathSqrt(a_discriminant);
+            a_dist = a_v - Math.sqrt(a_discriminant);
         }
         //
 
@@ -91,15 +90,15 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_closest_0 = a_dist;
 
             a_closest_1_point_x = a_object_point_x;
-                a_closest_1_point_y = a_object_point_y;
-                a_closest_1_point_z = a_object_point_z;
-                a_closest_1_color_x = a_object_color_x;
-                a_closest_1_color_y = a_object_color_y;
-                a_closest_1_color_z = a_object_color_z;
-                a_closest_1_specular = a_object_specular;
-                a_closest_1_lambert = a_object_lambert;
-                a_closest_1_ambient = a_object_ambient;
-                a_closest_1_radius = a_object_radius;
+            a_closest_1_point_y = a_object_point_y;
+            a_closest_1_point_z = a_object_point_z;
+            a_closest_1_color_x = a_object_color_x;
+            a_closest_1_color_y = a_object_color_y;
+            a_closest_1_color_z = a_object_color_z;
+            a_closest_1_specular = a_object_specular;
+            a_closest_1_lambert = a_object_lambert;
+            a_closest_1_ambient = a_object_ambient;
+            a_closest_1_radius = a_object_radius;
         }
     }
 
@@ -116,21 +115,21 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_distObject_1_radius = a_closest_1_radius;
     /////
 
-    if (a_distObject_0 === 100000000) {
+    if (a_distObject_0 === 10000000000) {
         return 200; // whit ish
     } else {
         var a_dist = a_distObject_0;
 
-            a_object_point_x = a_distObject_1_point_x;
-            a_object_point_y = a_distObject_1_point_y;
-            a_object_point_z = a_distObject_1_point_z;
-            a_object_color_x = a_distObject_1_color_x;
-            a_object_color_y = a_distObject_1_color_y;
-            a_object_color_z = a_distObject_1_color_z;
-            a_object_specular = a_distObject_1_specular;
-            a_object_lambert = a_distObject_1_lambert;
-            a_object_ambient = a_distObject_1_ambient;
-            a_object_radius = a_distObject_1_radius;
+        a_object_point_x = a_distObject_1_point_x;
+        a_object_point_y = a_distObject_1_point_y;
+        a_object_point_z = a_distObject_1_point_z;
+        a_object_color_x = a_distObject_1_color_x;
+        a_object_color_y = a_distObject_1_color_y;
+        a_object_color_z = a_distObject_1_color_z;
+        a_object_specular = a_distObject_1_specular;
+        a_object_lambert = a_distObject_1_lambert;
+        a_object_ambient = a_distObject_1_ambient;
+        a_object_radius = a_distObject_1_radius;
 
         var a_pointAtTime_x, a_pointAtTime_y, a_pointAtTime_z;
         // scaling first
@@ -163,8 +162,9 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_c_z = 0,
             a_lambertAmount = 0;
 
-         if (a_object_lambert>0) {
-            
+        if (a_object_lambert>0) {
+            var a_isLightVisible;
+
             // islightvisible
             var a_diff_x = a_pointAtTime_x - lights_x,
                 a_diff_y = a_pointAtTime_y - lights_y,
@@ -182,7 +182,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_scene_ray_vector_y = a_diff_y,
                 a_scene_ray_vector_z = a_diff_z;
 
-            var a_closest_0 = 100000000,
+            var a_closest_0 = 10000000000,
                 a_closest_1_point_x = -1,
                 a_closest_1_point_y = -1,
                 a_closest_1_point_z = -1,
@@ -196,40 +196,40 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
             for (var i = 0; i < 3; i++) {
 
-                if (i == 0) {
-            a_object_point_x = n_objects_0_x;
-            a_object_point_y = n_objects_0_y;
-            a_object_point_z = n_objects_0_z;
-            a_object_color_x = n_objects_0_r;
-            a_object_color_y = n_objects_0_g;
-            a_object_color_z = n_objects_0_b;
-            a_object_specular = n_objects_0_spec;
-            a_object_lambert = n_objects_0_lamb;
-            a_object_ambient = n_objects_0_amb;
-            a_object_radius = n_objects_0_rad;
-        } else if (i == 1) {
-            a_object_point_x = n_objects_1_x;
-            a_object_point_y = n_objects_1_y;
-            a_object_point_z = n_objects_1_z;
-            a_object_color_x = n_objects_1_r;
-            a_object_color_y = n_objects_1_g;
-            a_object_color_z = n_objects_1_b;
-            a_object_specular = n_objects_1_spec;
-            a_object_lambert = n_objects_1_lamb;
-            a_object_ambient = n_objects_1_amb;
-            a_object_radius = n_objects_1_rad;
-        } else if (i == 2) {
-            a_object_point_x = n_objects_2_x;
-            a_object_point_y = n_objects_2_y;
-            a_object_point_z = n_objects_2_z;
-            a_object_color_x = n_objects_2_r;
-            a_object_color_y = n_objects_2_g;
-            a_object_color_z = n_objects_2_b;
-            a_object_specular = n_objects_2_spec;
-            a_object_lambert = n_objects_2_lamb;
-            a_object_ambient = n_objects_2_amb;
-            a_object_radius = n_objects_2_rad;
-        }
+                 if (i == 0) {
+                    a_object_point_x = n_objects_0_x;
+                    a_object_point_y = n_objects_0_y;
+                    a_object_point_z = n_objects_0_z;
+                    a_object_color_x = n_objects_0_r;
+                    a_object_color_y = n_objects_0_g;
+                    a_object_color_z = n_objects_0_b;
+                    a_object_specular = n_objects_0_spec;
+                    a_object_lambert = n_objects_0_lamb;
+                    a_object_ambient = n_objects_0_amb;
+                    a_object_radius = n_objects_0_rad;
+                } else if (i == 1) {
+                    a_object_point_x = n_objects_1_x;
+                    a_object_point_y = n_objects_1_y;
+                    a_object_point_z = n_objects_1_z;
+                    a_object_color_x = n_objects_1_r;
+                    a_object_color_y = n_objects_1_g;
+                    a_object_color_z = n_objects_1_b;
+                    a_object_specular = n_objects_1_spec;
+                    a_object_lambert = n_objects_1_lamb;
+                    a_object_ambient = n_objects_1_amb;
+                    a_object_radius = n_objects_1_rad;
+                } else if (i == 2) {
+                    a_object_point_x = n_objects_2_x;
+                    a_object_point_y = n_objects_2_y;
+                    a_object_point_z = n_objects_2_z;
+                    a_object_color_x = n_objects_2_r;
+                    a_object_color_y = n_objects_2_g;
+                    a_object_color_z = n_objects_2_b;
+                    a_object_specular = n_objects_2_spec;
+                    a_object_lambert = n_objects_2_lamb;
+                    a_object_ambient = n_objects_2_amb;
+                    a_object_radius = n_objects_2_rad;
+                }
 
                 // sphere intersection
                 // subtract
@@ -244,7 +244,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                         a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
                     a_discriminant = (a_object_radius * a_object_radius) - a_eoDot + (a_v * a_v);
                 if (a_discriminant < 0) {} else {
-                    a_dist = a_v - mathSqrt(a_discriminant);
+                    a_dist = a_v - Math.sqrt(a_discriminant);
                 }
                 //
 
@@ -253,15 +253,15 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                     a_closest_0 = a_dist;
 
                     a_closest_1_point_x = a_object_point_x;
-                        a_closest_1_point_y = a_object_point_y;
-                        a_closest_1_point_z = a_object_point_z;
-                        a_closest_1_color_x = a_object_color_x;
-                        a_closest_1_color_y = a_object_color_y;
-                        a_closest_1_color_z = a_object_color_z;
-                        a_closest_1_specular = a_object_specular;
-                        a_closest_1_lambert = a_object_lambert;
-                        a_closest_1_ambient = a_object_ambient;
-                        a_closest_1_radius = a_object_radius;
+                    a_closest_1_point_y = a_object_point_y;
+                    a_closest_1_point_z = a_object_point_z;
+                    a_closest_1_color_x = a_object_color_x;
+                    a_closest_1_color_y = a_object_color_y;
+                    a_closest_1_color_z = a_object_color_z;
+                    a_closest_1_specular = a_object_specular;
+                    a_closest_1_lambert = a_object_lambert;
+                    a_closest_1_ambient = a_object_ambient;
+                    a_closest_1_radius = a_object_radius;
                 }
             }
 
@@ -277,6 +277,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
+            // a_isLightVisible = a_distObject_0 > -0.005;
             //
 
             if (a_distObject_0 > -0.005) {
@@ -295,7 +296,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             }
         }
 
-         if (a_object_specular>0) {
+        if (a_object_specular>0) {
             // calculating reflected normal
             var a_reflectedRay_vector_x, a_reflectedRay_vector_y, a_reflectedRay_vector_z;
             //dotproduct
@@ -326,7 +327,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 lights_x, lights_y, lights_z, ++depth, color);
 
 
-             if ( reflectedColor>0){
+            if (reflectedColor>0) {
                 //scale and add
                 if (color == 0) {
                     a_c_x += reflectedColor * a_object_specular;;
@@ -339,7 +340,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             }
         }
 
-        a_lambertAmount = mathMin(1, a_lambertAmount);
+        a_lambertAmount = Math.min(1, a_lambertAmount);
 
         if (color == 0) {
             a_c_x += a_a_x * a_lambertAmount * a_object_lambert;
@@ -356,7 +357,6 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         }
     }
 }
-
 function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_0_type, n_objects_0_x, n_objects_0_y, n_objects_0_z, n_objects_0_r, n_objects_0_g, n_objects_0_b, n_objects_0_spec, n_objects_0_lamb, n_objects_0_amb, n_objects_0_rad,
     n_objects_1_type, n_objects_1_x, n_objects_1_y, n_objects_1_z, n_objects_1_r, n_objects_1_g, n_objects_1_b, n_objects_1_spec, n_objects_1_lamb, n_objects_1_amb, n_objects_1_rad,
     n_objects_2_type, n_objects_2_x, n_objects_2_y, n_objects_2_z, n_objects_2_r, n_objects_2_g, n_objects_2_b, n_objects_2_spec, n_objects_2_lamb, n_objects_2_amb, n_objects_2_rad,
@@ -369,7 +369,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_ray_vector_y = ray_v_y,
         a_ray_vector_z = ray_v_z;
     // intersectscene for calculating the distobject
-    var a_closest_0 = 100000000,
+    var a_closest_0 = 10000000000,
         a_closest_1_point_x = -1,
         a_closest_1_point_y = -1,
         a_closest_1_point_z = -1,
@@ -394,38 +394,38 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
     for (var i = 0; i < 3; i++) {
         if (i == 0) {
-            a_object_point_x = n_objects_0_x;
-            a_object_point_y = n_objects_0_y;
-            a_object_point_z = n_objects_0_z;
-            a_object_color_x = n_objects_0_r;
-            a_object_color_y = n_objects_0_g;
-            a_object_color_z = n_objects_0_b;
-            a_object_specular = n_objects_0_spec;
-            a_object_lambert = n_objects_0_lamb;
-            a_object_ambient = n_objects_0_amb;
-            a_object_radius = n_objects_0_rad;
+                a_object_point_x = n_objects_0_x;
+                a_object_point_y = n_objects_0_y;
+                a_object_point_z = n_objects_0_z;
+                a_object_color_x = n_objects_0_r;
+                a_object_color_y = n_objects_0_g;
+                a_object_color_z = n_objects_0_b;
+                a_object_specular = n_objects_0_spec;
+                a_object_lambert = n_objects_0_lamb;
+                a_object_ambient = n_objects_0_amb;
+                a_object_radius = n_objects_0_rad;
         } else if (i == 1) {
-            a_object_point_x = n_objects_1_x;
-            a_object_point_y = n_objects_1_y;
-            a_object_point_z = n_objects_1_z;
-            a_object_color_x = n_objects_1_r;
-            a_object_color_y = n_objects_1_g;
-            a_object_color_z = n_objects_1_b;
-            a_object_specular = n_objects_1_spec;
-            a_object_lambert = n_objects_1_lamb;
-            a_object_ambient = n_objects_1_amb;
-            a_object_radius = n_objects_1_rad;
+                a_object_point_x = n_objects_1_x;
+                a_object_point_y = n_objects_1_y;
+                a_object_point_z = n_objects_1_z;
+                a_object_color_x = n_objects_1_r;
+                a_object_color_y = n_objects_1_g;
+                a_object_color_z = n_objects_1_b;
+                a_object_specular = n_objects_1_spec;
+                a_object_lambert = n_objects_1_lamb;
+                a_object_ambient = n_objects_1_amb;
+                a_object_radius = n_objects_1_rad;
         } else if (i == 2) {
-            a_object_point_x = n_objects_2_x;
-            a_object_point_y = n_objects_2_y;
-            a_object_point_z = n_objects_2_z;
-            a_object_color_x = n_objects_2_r;
-            a_object_color_y = n_objects_2_g;
-            a_object_color_z = n_objects_2_b;
-            a_object_specular = n_objects_2_spec;
-            a_object_lambert = n_objects_2_lamb;
-            a_object_ambient = n_objects_2_amb;
-            a_object_radius = n_objects_2_rad;
+                a_object_point_x = n_objects_2_x;
+                a_object_point_y = n_objects_2_y;
+                a_object_point_z = n_objects_2_z;
+                a_object_color_x = n_objects_2_r;
+                a_object_color_y = n_objects_2_g;
+                a_object_color_z = n_objects_2_b;
+                a_object_specular = n_objects_2_spec;
+                a_object_lambert = n_objects_2_lamb;
+                a_object_ambient = n_objects_2_amb;
+                a_object_radius = n_objects_2_rad;
         }
 
         // sphere intersection
@@ -441,7 +441,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
             a_discriminant = (a_object_radius * a_object_radius) - a_eoDot + (a_v * a_v);
         if (a_discriminant < 0) {} else {
-            a_dist = a_v - mathSqrt(a_discriminant);
+            a_dist = a_v - Math.sqrt(a_discriminant);
         }
         //
 
@@ -449,15 +449,15 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_closest_0 = a_dist;
 
             a_closest_1_point_x = a_object_point_x;
-                a_closest_1_point_y = a_object_point_y;
-                a_closest_1_point_z = a_object_point_z;
-                a_closest_1_color_x = a_object_color_x;
-                a_closest_1_color_y = a_object_color_y;
-                a_closest_1_color_z = a_object_color_z;
-                a_closest_1_specular = a_object_specular;
-                a_closest_1_lambert = a_object_lambert;
-                a_closest_1_ambient = a_object_ambient;
-                a_closest_1_radius = a_object_radius;
+            a_closest_1_point_y = a_object_point_y;
+            a_closest_1_point_z = a_object_point_z;
+            a_closest_1_color_x = a_object_color_x;
+            a_closest_1_color_y = a_object_color_y;
+            a_closest_1_color_z = a_object_color_z;
+            a_closest_1_specular = a_object_specular;
+            a_closest_1_lambert = a_object_lambert;
+            a_closest_1_ambient = a_object_ambient;
+            a_closest_1_radius = a_object_radius;
         }
     }
 
@@ -474,21 +474,21 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_distObject_1_radius = a_closest_1_radius;
     /////
 
-    if (a_distObject_0 === 100000000) {
+    if (a_distObject_0 === 10000000000) {
         return 200; // whit ish
     } else {
         var a_dist = a_distObject_0;
 
-            a_object_point_x = a_distObject_1_point_x;
-            a_object_point_y = a_distObject_1_point_y;
-            a_object_point_z = a_distObject_1_point_z;
-            a_object_color_x = a_distObject_1_color_x;
-            a_object_color_y = a_distObject_1_color_y;
-            a_object_color_z = a_distObject_1_color_z;
-            a_object_specular = a_distObject_1_specular;
-            a_object_lambert = a_distObject_1_lambert;
-            a_object_ambient = a_distObject_1_ambient;
-            a_object_radius = a_distObject_1_radius;
+        a_object_point_x = a_distObject_1_point_x;
+        a_object_point_y = a_distObject_1_point_y;
+        a_object_point_z = a_distObject_1_point_z;
+        a_object_color_x = a_distObject_1_color_x;
+        a_object_color_y = a_distObject_1_color_y;
+        a_object_color_z = a_distObject_1_color_z;
+        a_object_specular = a_distObject_1_specular;
+        a_object_lambert = a_distObject_1_lambert;
+        a_object_ambient = a_distObject_1_ambient;
+        a_object_radius = a_distObject_1_radius;
 
         var a_pointAtTime_x, a_pointAtTime_y, a_pointAtTime_z;
         // scaling first
@@ -521,8 +521,9 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_c_z = 0,
             a_lambertAmount = 0;
 
-         if (a_object_lambert>0) {
-            
+        if (a_object_lambert>0) {
+            var a_isLightVisible;
+
             // islightvisible
             var a_diff_x = a_pointAtTime_x - lights_x,
                 a_diff_y = a_pointAtTime_y - lights_y,
@@ -540,7 +541,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_scene_ray_vector_y = a_diff_y,
                 a_scene_ray_vector_z = a_diff_z;
 
-            var a_closest_0 = 100000000,
+            var a_closest_0 = 10000000000,
                 a_closest_1_point_x = -1,
                 a_closest_1_point_y = -1,
                 a_closest_1_point_z = -1,
@@ -554,44 +555,43 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
             for (var i = 0; i < 3; i++) {
 
-                if (i == 0) {
-            a_object_point_x = n_objects_0_x;
-            a_object_point_y = n_objects_0_y;
-            a_object_point_z = n_objects_0_z;
-            a_object_color_x = n_objects_0_r;
-            a_object_color_y = n_objects_0_g;
-            a_object_color_z = n_objects_0_b;
-            a_object_specular = n_objects_0_spec;
-            a_object_lambert = n_objects_0_lamb;
-            a_object_ambient = n_objects_0_amb;
-            a_object_radius = n_objects_0_rad;
-        } else if (i == 1) {
-            a_object_point_x = n_objects_1_x;
-            a_object_point_y = n_objects_1_y;
-            a_object_point_z = n_objects_1_z;
-            a_object_color_x = n_objects_1_r;
-            a_object_color_y = n_objects_1_g;
-            a_object_color_z = n_objects_1_b;
-            a_object_specular = n_objects_1_spec;
-            a_object_lambert = n_objects_1_lamb;
-            a_object_ambient = n_objects_1_amb;
-            a_object_radius = n_objects_1_rad;
-        } else if (i == 2) {
-            a_object_point_x = n_objects_2_x;
-            a_object_point_y = n_objects_2_y;
-            a_object_point_z = n_objects_2_z;
-            a_object_color_x = n_objects_2_r;
-            a_object_color_y = n_objects_2_g;
-            a_object_color_z = n_objects_2_b;
-            a_object_specular = n_objects_2_spec;
-            a_object_lambert = n_objects_2_lamb;
-            a_object_ambient = n_objects_2_amb;
-            a_object_radius = n_objects_2_rad;
-        }
+                 if (i == 0) {
+                    a_object_point_x = n_objects_0_x;
+                    a_object_point_y = n_objects_0_y;
+                    a_object_point_z = n_objects_0_z;
+                    a_object_color_x = n_objects_0_r;
+                    a_object_color_y = n_objects_0_g;
+                    a_object_color_z = n_objects_0_b;
+                    a_object_specular = n_objects_0_spec;
+                    a_object_lambert = n_objects_0_lamb;
+                    a_object_ambient = n_objects_0_amb;
+                    a_object_radius = n_objects_0_rad;
+                } else if (i == 1) {
+                    a_object_point_x = n_objects_1_x;
+                    a_object_point_y = n_objects_1_y;
+                    a_object_point_z = n_objects_1_z;
+                    a_object_color_x = n_objects_1_r;
+                    a_object_color_y = n_objects_1_g;
+                    a_object_color_z = n_objects_1_b;
+                    a_object_specular = n_objects_1_spec;
+                    a_object_lambert = n_objects_1_lamb;
+                    a_object_ambient = n_objects_1_amb;
+                    a_object_radius = n_objects_1_rad;
+                } else if (i == 2) {
+                    a_object_point_x = n_objects_2_x;
+                    a_object_point_y = n_objects_2_y;
+                    a_object_point_z = n_objects_2_z;
+                    a_object_color_x = n_objects_2_r;
+                    a_object_color_y = n_objects_2_g;
+                    a_object_color_z = n_objects_2_b;
+                    a_object_specular = n_objects_2_spec;
+                    a_object_lambert = n_objects_2_lamb;
+                    a_object_ambient = n_objects_2_amb;
+                    a_object_radius = n_objects_2_rad;
+                }
 
                 // sphere intersection
                 // subtract
-
                 var a_dist = -1;
                 var a_eye_to_center_x = a_object_point_x - a_scene_ray_point_x,
                     a_eye_to_center_y = a_object_point_y - a_scene_ray_point_y,
@@ -603,7 +603,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                         a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
                     a_discriminant = (a_object_radius * a_object_radius) - a_eoDot + (a_v * a_v);
                 if (a_discriminant < 0) {} else {
-                    a_dist = a_v - mathSqrt(a_discriminant);
+                    a_dist = a_v - Math.sqrt(a_discriminant);
                 }
                 //
 
@@ -612,15 +612,15 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                     a_closest_0 = a_dist;
 
                     a_closest_1_point_x = a_object_point_x;
-                        a_closest_1_point_y = a_object_point_y;
-                        a_closest_1_point_z = a_object_point_z;
-                        a_closest_1_color_x = a_object_color_x;
-                        a_closest_1_color_y = a_object_color_y;
-                        a_closest_1_color_z = a_object_color_z;
-                        a_closest_1_specular = a_object_specular;
-                        a_closest_1_lambert = a_object_lambert;
-                        a_closest_1_ambient = a_object_ambient;
-                        a_closest_1_radius = a_object_radius;
+                    a_closest_1_point_y = a_object_point_y;
+                    a_closest_1_point_z = a_object_point_z;
+                    a_closest_1_color_x = a_object_color_x;
+                    a_closest_1_color_y = a_object_color_y;
+                    a_closest_1_color_z = a_object_color_z;
+                    a_closest_1_specular = a_object_specular;
+                    a_closest_1_lambert = a_object_lambert;
+                    a_closest_1_ambient = a_object_ambient;
+                    a_closest_1_radius = a_object_radius;
                 }
             }
 
@@ -636,6 +636,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
+            // a_isLightVisible = a_distObject_0 > -0.005;
             //
 
             if (a_distObject_0 > -0.005) {
@@ -654,7 +655,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             }
         }
 
-         if (a_object_specular>0) {
+        if (a_object_specular>0) {
             // calculating reflected normal
             var a_reflectedRay_vector_x, a_reflectedRay_vector_y, a_reflectedRay_vector_z;
             //dotproduct
@@ -685,7 +686,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 lights_x, lights_y, lights_z, ++depth, color);
 
 
-             if ( reflectedColor>0){
+            if (reflectedColor>0) {
                 //scale and add
                 if (color == 0) {
                     a_c_x += reflectedColor * a_object_specular;;
@@ -698,7 +699,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             }
         }
 
-        a_lambertAmount = mathMin(1, a_lambertAmount);
+        a_lambertAmount = Math.min(1, a_lambertAmount);
 
         if (color == 0) {
             a_c_x += a_a_x * a_lambertAmount * a_object_lambert;
@@ -727,7 +728,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_ray_vector_y = ray_v_y,
         a_ray_vector_z = ray_v_z;
     // intersectscene for calculating the distobject
-    var a_closest_0 = 100000000,
+    var a_closest_0 = 10000000000,
         a_closest_1_point_x = -1,
         a_closest_1_point_y = -1,
         a_closest_1_point_z = -1,
@@ -752,38 +753,38 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
     for (var i = 0; i < 3; i++) {
         if (i == 0) {
-            a_object_point_x = n_objects_0_x;
-            a_object_point_y = n_objects_0_y;
-            a_object_point_z = n_objects_0_z;
-            a_object_color_x = n_objects_0_r;
-            a_object_color_y = n_objects_0_g;
-            a_object_color_z = n_objects_0_b;
-            a_object_specular = n_objects_0_spec;
-            a_object_lambert = n_objects_0_lamb;
-            a_object_ambient = n_objects_0_amb;
-            a_object_radius = n_objects_0_rad;
+                a_object_point_x = n_objects_0_x;
+                a_object_point_y = n_objects_0_y;
+                a_object_point_z = n_objects_0_z;
+                a_object_color_x = n_objects_0_r;
+                a_object_color_y = n_objects_0_g;
+                a_object_color_z = n_objects_0_b;
+                a_object_specular = n_objects_0_spec;
+                a_object_lambert = n_objects_0_lamb;
+                a_object_ambient = n_objects_0_amb;
+                a_object_radius = n_objects_0_rad;
         } else if (i == 1) {
-            a_object_point_x = n_objects_1_x;
-            a_object_point_y = n_objects_1_y;
-            a_object_point_z = n_objects_1_z;
-            a_object_color_x = n_objects_1_r;
-            a_object_color_y = n_objects_1_g;
-            a_object_color_z = n_objects_1_b;
-            a_object_specular = n_objects_1_spec;
-            a_object_lambert = n_objects_1_lamb;
-            a_object_ambient = n_objects_1_amb;
-            a_object_radius = n_objects_1_rad;
+                a_object_point_x = n_objects_1_x;
+                a_object_point_y = n_objects_1_y;
+                a_object_point_z = n_objects_1_z;
+                a_object_color_x = n_objects_1_r;
+                a_object_color_y = n_objects_1_g;
+                a_object_color_z = n_objects_1_b;
+                a_object_specular = n_objects_1_spec;
+                a_object_lambert = n_objects_1_lamb;
+                a_object_ambient = n_objects_1_amb;
+                a_object_radius = n_objects_1_rad;
         } else if (i == 2) {
-            a_object_point_x = n_objects_2_x;
-            a_object_point_y = n_objects_2_y;
-            a_object_point_z = n_objects_2_z;
-            a_object_color_x = n_objects_2_r;
-            a_object_color_y = n_objects_2_g;
-            a_object_color_z = n_objects_2_b;
-            a_object_specular = n_objects_2_spec;
-            a_object_lambert = n_objects_2_lamb;
-            a_object_ambient = n_objects_2_amb;
-            a_object_radius = n_objects_2_rad;
+                a_object_point_x = n_objects_2_x;
+                a_object_point_y = n_objects_2_y;
+                a_object_point_z = n_objects_2_z;
+                a_object_color_x = n_objects_2_r;
+                a_object_color_y = n_objects_2_g;
+                a_object_color_z = n_objects_2_b;
+                a_object_specular = n_objects_2_spec;
+                a_object_lambert = n_objects_2_lamb;
+                a_object_ambient = n_objects_2_amb;
+                a_object_radius = n_objects_2_rad;
         }
 
         // sphere intersection
@@ -799,7 +800,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
             a_discriminant = (a_object_radius * a_object_radius) - a_eoDot + (a_v * a_v);
         if (a_discriminant < 0) {} else {
-            a_dist = a_v - mathSqrt(a_discriminant);
+            a_dist = a_v - Math.sqrt(a_discriminant);
         }
         //
 
@@ -807,15 +808,15 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_closest_0 = a_dist;
 
             a_closest_1_point_x = a_object_point_x;
-                a_closest_1_point_y = a_object_point_y;
-                a_closest_1_point_z = a_object_point_z;
-                a_closest_1_color_x = a_object_color_x;
-                a_closest_1_color_y = a_object_color_y;
-                a_closest_1_color_z = a_object_color_z;
-                a_closest_1_specular = a_object_specular;
-                a_closest_1_lambert = a_object_lambert;
-                a_closest_1_ambient = a_object_ambient;
-                a_closest_1_radius = a_object_radius;
+            a_closest_1_point_y = a_object_point_y;
+            a_closest_1_point_z = a_object_point_z;
+            a_closest_1_color_x = a_object_color_x;
+            a_closest_1_color_y = a_object_color_y;
+            a_closest_1_color_z = a_object_color_z;
+            a_closest_1_specular = a_object_specular;
+            a_closest_1_lambert = a_object_lambert;
+            a_closest_1_ambient = a_object_ambient;
+            a_closest_1_radius = a_object_radius;
         }
     }
 
@@ -832,21 +833,21 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_distObject_1_radius = a_closest_1_radius;
     /////
 
-    if (a_distObject_0 === 100000000) {
+    if (a_distObject_0 === 10000000000) {
         return 200; // whit ish
     } else {
         var a_dist = a_distObject_0;
 
-            a_object_point_x = a_distObject_1_point_x;
-            a_object_point_y = a_distObject_1_point_y;
-            a_object_point_z = a_distObject_1_point_z;
-            a_object_color_x = a_distObject_1_color_x;
-            a_object_color_y = a_distObject_1_color_y;
-            a_object_color_z = a_distObject_1_color_z;
-            a_object_specular = a_distObject_1_specular;
-            a_object_lambert = a_distObject_1_lambert;
-            a_object_ambient = a_distObject_1_ambient;
-            a_object_radius = a_distObject_1_radius;
+        a_object_point_x = a_distObject_1_point_x;
+        a_object_point_y = a_distObject_1_point_y;
+        a_object_point_z = a_distObject_1_point_z;
+        a_object_color_x = a_distObject_1_color_x;
+        a_object_color_y = a_distObject_1_color_y;
+        a_object_color_z = a_distObject_1_color_z;
+        a_object_specular = a_distObject_1_specular;
+        a_object_lambert = a_distObject_1_lambert;
+        a_object_ambient = a_distObject_1_ambient;
+        a_object_radius = a_distObject_1_radius;
 
         var a_pointAtTime_x, a_pointAtTime_y, a_pointAtTime_z;
         // scaling first
@@ -879,8 +880,9 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_c_z = 0,
             a_lambertAmount = 0;
 
-         if (a_object_lambert>0) {
-            
+        if (a_object_lambert>0) {
+            var a_isLightVisible;
+
             // islightvisible
             var a_diff_x = a_pointAtTime_x - lights_x,
                 a_diff_y = a_pointAtTime_y - lights_y,
@@ -898,7 +900,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_scene_ray_vector_y = a_diff_y,
                 a_scene_ray_vector_z = a_diff_z;
 
-            var a_closest_0 = 100000000,
+            var a_closest_0 = 10000000000,
                 a_closest_1_point_x = -1,
                 a_closest_1_point_y = -1,
                 a_closest_1_point_z = -1,
@@ -912,40 +914,40 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
             for (var i = 0; i < 3; i++) {
 
-                if (i == 0) {
-            a_object_point_x = n_objects_0_x;
-            a_object_point_y = n_objects_0_y;
-            a_object_point_z = n_objects_0_z;
-            a_object_color_x = n_objects_0_r;
-            a_object_color_y = n_objects_0_g;
-            a_object_color_z = n_objects_0_b;
-            a_object_specular = n_objects_0_spec;
-            a_object_lambert = n_objects_0_lamb;
-            a_object_ambient = n_objects_0_amb;
-            a_object_radius = n_objects_0_rad;
-        } else if (i == 1) {
-            a_object_point_x = n_objects_1_x;
-            a_object_point_y = n_objects_1_y;
-            a_object_point_z = n_objects_1_z;
-            a_object_color_x = n_objects_1_r;
-            a_object_color_y = n_objects_1_g;
-            a_object_color_z = n_objects_1_b;
-            a_object_specular = n_objects_1_spec;
-            a_object_lambert = n_objects_1_lamb;
-            a_object_ambient = n_objects_1_amb;
-            a_object_radius = n_objects_1_rad;
-        } else if (i == 2) {
-            a_object_point_x = n_objects_2_x;
-            a_object_point_y = n_objects_2_y;
-            a_object_point_z = n_objects_2_z;
-            a_object_color_x = n_objects_2_r;
-            a_object_color_y = n_objects_2_g;
-            a_object_color_z = n_objects_2_b;
-            a_object_specular = n_objects_2_spec;
-            a_object_lambert = n_objects_2_lamb;
-            a_object_ambient = n_objects_2_amb;
-            a_object_radius = n_objects_2_rad;
-        }
+                 if (i == 0) {
+                    a_object_point_x = n_objects_0_x;
+                    a_object_point_y = n_objects_0_y;
+                    a_object_point_z = n_objects_0_z;
+                    a_object_color_x = n_objects_0_r;
+                    a_object_color_y = n_objects_0_g;
+                    a_object_color_z = n_objects_0_b;
+                    a_object_specular = n_objects_0_spec;
+                    a_object_lambert = n_objects_0_lamb;
+                    a_object_ambient = n_objects_0_amb;
+                    a_object_radius = n_objects_0_rad;
+                } else if (i == 1) {
+                    a_object_point_x = n_objects_1_x;
+                    a_object_point_y = n_objects_1_y;
+                    a_object_point_z = n_objects_1_z;
+                    a_object_color_x = n_objects_1_r;
+                    a_object_color_y = n_objects_1_g;
+                    a_object_color_z = n_objects_1_b;
+                    a_object_specular = n_objects_1_spec;
+                    a_object_lambert = n_objects_1_lamb;
+                    a_object_ambient = n_objects_1_amb;
+                    a_object_radius = n_objects_1_rad;
+                } else if (i == 2) {
+                    a_object_point_x = n_objects_2_x;
+                    a_object_point_y = n_objects_2_y;
+                    a_object_point_z = n_objects_2_z;
+                    a_object_color_x = n_objects_2_r;
+                    a_object_color_y = n_objects_2_g;
+                    a_object_color_z = n_objects_2_b;
+                    a_object_specular = n_objects_2_spec;
+                    a_object_lambert = n_objects_2_lamb;
+                    a_object_ambient = n_objects_2_amb;
+                    a_object_radius = n_objects_2_rad;
+                }
 
                 // sphere intersection
                 // subtract
@@ -960,7 +962,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                         a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
                     a_discriminant = (a_object_radius * a_object_radius) - a_eoDot + (a_v * a_v);
                 if (a_discriminant < 0) {} else {
-                    a_dist = a_v - mathSqrt(a_discriminant);
+                    a_dist = a_v - Math.sqrt(a_discriminant);
                 }
                 //
 
@@ -969,15 +971,15 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                     a_closest_0 = a_dist;
 
                     a_closest_1_point_x = a_object_point_x;
-                        a_closest_1_point_y = a_object_point_y;
-                        a_closest_1_point_z = a_object_point_z;
-                        a_closest_1_color_x = a_object_color_x;
-                        a_closest_1_color_y = a_object_color_y;
-                        a_closest_1_color_z = a_object_color_z;
-                        a_closest_1_specular = a_object_specular;
-                        a_closest_1_lambert = a_object_lambert;
-                        a_closest_1_ambient = a_object_ambient;
-                        a_closest_1_radius = a_object_radius;
+                    a_closest_1_point_y = a_object_point_y;
+                    a_closest_1_point_z = a_object_point_z;
+                    a_closest_1_color_x = a_object_color_x;
+                    a_closest_1_color_y = a_object_color_y;
+                    a_closest_1_color_z = a_object_color_z;
+                    a_closest_1_specular = a_object_specular;
+                    a_closest_1_lambert = a_object_lambert;
+                    a_closest_1_ambient = a_object_ambient;
+                    a_closest_1_radius = a_object_radius;
                 }
             }
 
@@ -993,6 +995,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
+            // a_isLightVisible = a_distObject_0 > -0.005;
             //
 
             if (a_distObject_0 > -0.005) {
@@ -1011,7 +1014,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             }
         }
 
-         if (a_object_specular>0) {
+        if (a_object_specular>0) {
             // calculating reflected normal
             var a_reflectedRay_vector_x, a_reflectedRay_vector_y, a_reflectedRay_vector_z;
             //dotproduct
@@ -1042,7 +1045,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 lights_x, lights_y, lights_z, ++depth, color);
 
 
-             if ( reflectedColor>0){
+            if (reflectedColor>0) {
                 //scale and add
                 if (color == 0) {
                     a_c_x += reflectedColor * a_object_specular;;
@@ -1055,7 +1058,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             }
         }
 
-        a_lambertAmount = mathMin(1, a_lambertAmount);
+        a_lambertAmount = Math.min(1, a_lambertAmount);
 
         if (color == 0) {
             a_c_x += a_a_x * a_lambertAmount * a_object_lambert;
@@ -1084,7 +1087,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_ray_vector_y = ray_v_y,
         a_ray_vector_z = ray_v_z;
     // intersectscene for calculating the distobject
-    var a_closest_0 = 100000000,
+    var a_closest_0 = 10000000000,
         a_closest_1_point_x = -1,
         a_closest_1_point_y = -1,
         a_closest_1_point_z = -1,
@@ -1109,38 +1112,38 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
     for (var i = 0; i < 3; i++) {
         if (i == 0) {
-            a_object_point_x = n_objects_0_x;
-            a_object_point_y = n_objects_0_y;
-            a_object_point_z = n_objects_0_z;
-            a_object_color_x = n_objects_0_r;
-            a_object_color_y = n_objects_0_g;
-            a_object_color_z = n_objects_0_b;
-            a_object_specular = n_objects_0_spec;
-            a_object_lambert = n_objects_0_lamb;
-            a_object_ambient = n_objects_0_amb;
-            a_object_radius = n_objects_0_rad;
+                a_object_point_x = n_objects_0_x;
+                a_object_point_y = n_objects_0_y;
+                a_object_point_z = n_objects_0_z;
+                a_object_color_x = n_objects_0_r;
+                a_object_color_y = n_objects_0_g;
+                a_object_color_z = n_objects_0_b;
+                a_object_specular = n_objects_0_spec;
+                a_object_lambert = n_objects_0_lamb;
+                a_object_ambient = n_objects_0_amb;
+                a_object_radius = n_objects_0_rad;
         } else if (i == 1) {
-            a_object_point_x = n_objects_1_x;
-            a_object_point_y = n_objects_1_y;
-            a_object_point_z = n_objects_1_z;
-            a_object_color_x = n_objects_1_r;
-            a_object_color_y = n_objects_1_g;
-            a_object_color_z = n_objects_1_b;
-            a_object_specular = n_objects_1_spec;
-            a_object_lambert = n_objects_1_lamb;
-            a_object_ambient = n_objects_1_amb;
-            a_object_radius = n_objects_1_rad;
+                a_object_point_x = n_objects_1_x;
+                a_object_point_y = n_objects_1_y;
+                a_object_point_z = n_objects_1_z;
+                a_object_color_x = n_objects_1_r;
+                a_object_color_y = n_objects_1_g;
+                a_object_color_z = n_objects_1_b;
+                a_object_specular = n_objects_1_spec;
+                a_object_lambert = n_objects_1_lamb;
+                a_object_ambient = n_objects_1_amb;
+                a_object_radius = n_objects_1_rad;
         } else if (i == 2) {
-            a_object_point_x = n_objects_2_x;
-            a_object_point_y = n_objects_2_y;
-            a_object_point_z = n_objects_2_z;
-            a_object_color_x = n_objects_2_r;
-            a_object_color_y = n_objects_2_g;
-            a_object_color_z = n_objects_2_b;
-            a_object_specular = n_objects_2_spec;
-            a_object_lambert = n_objects_2_lamb;
-            a_object_ambient = n_objects_2_amb;
-            a_object_radius = n_objects_2_rad;
+                a_object_point_x = n_objects_2_x;
+                a_object_point_y = n_objects_2_y;
+                a_object_point_z = n_objects_2_z;
+                a_object_color_x = n_objects_2_r;
+                a_object_color_y = n_objects_2_g;
+                a_object_color_z = n_objects_2_b;
+                a_object_specular = n_objects_2_spec;
+                a_object_lambert = n_objects_2_lamb;
+                a_object_ambient = n_objects_2_amb;
+                a_object_radius = n_objects_2_rad;
         }
 
         // sphere intersection
@@ -1156,7 +1159,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
             a_discriminant = (a_object_radius * a_object_radius) - a_eoDot + (a_v * a_v);
         if (a_discriminant < 0) {} else {
-            a_dist = a_v - mathSqrt(a_discriminant);
+            a_dist = a_v - Math.sqrt(a_discriminant);
         }
         //
 
@@ -1164,15 +1167,15 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_closest_0 = a_dist;
 
             a_closest_1_point_x = a_object_point_x;
-                a_closest_1_point_y = a_object_point_y;
-                a_closest_1_point_z = a_object_point_z;
-                a_closest_1_color_x = a_object_color_x;
-                a_closest_1_color_y = a_object_color_y;
-                a_closest_1_color_z = a_object_color_z;
-                a_closest_1_specular = a_object_specular;
-                a_closest_1_lambert = a_object_lambert;
-                a_closest_1_ambient = a_object_ambient;
-                a_closest_1_radius = a_object_radius;
+            a_closest_1_point_y = a_object_point_y;
+            a_closest_1_point_z = a_object_point_z;
+            a_closest_1_color_x = a_object_color_x;
+            a_closest_1_color_y = a_object_color_y;
+            a_closest_1_color_z = a_object_color_z;
+            a_closest_1_specular = a_object_specular;
+            a_closest_1_lambert = a_object_lambert;
+            a_closest_1_ambient = a_object_ambient;
+            a_closest_1_radius = a_object_radius;
         }
     }
 
@@ -1189,21 +1192,21 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         a_distObject_1_radius = a_closest_1_radius;
     /////
 
-    if (a_distObject_0 === 100000000) {
+    if (a_distObject_0 === 10000000000) {
         return 200; // whit ish
     } else {
         var a_dist = a_distObject_0;
 
-            a_object_point_x = a_distObject_1_point_x;
-            a_object_point_y = a_distObject_1_point_y;
-            a_object_point_z = a_distObject_1_point_z;
-            a_object_color_x = a_distObject_1_color_x;
-            a_object_color_y = a_distObject_1_color_y;
-            a_object_color_z = a_distObject_1_color_z;
-            a_object_specular = a_distObject_1_specular;
-            a_object_lambert = a_distObject_1_lambert;
-            a_object_ambient = a_distObject_1_ambient;
-            a_object_radius = a_distObject_1_radius;
+        a_object_point_x = a_distObject_1_point_x;
+        a_object_point_y = a_distObject_1_point_y;
+        a_object_point_z = a_distObject_1_point_z;
+        a_object_color_x = a_distObject_1_color_x;
+        a_object_color_y = a_distObject_1_color_y;
+        a_object_color_z = a_distObject_1_color_z;
+        a_object_specular = a_distObject_1_specular;
+        a_object_lambert = a_distObject_1_lambert;
+        a_object_ambient = a_distObject_1_ambient;
+        a_object_radius = a_distObject_1_radius;
 
         var a_pointAtTime_x, a_pointAtTime_y, a_pointAtTime_z;
         // scaling first
@@ -1236,8 +1239,9 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             a_c_z = 0,
             a_lambertAmount = 0;
 
-         if (a_object_lambert>0) {
-            
+        if (a_object_lambert>0) {
+            var a_isLightVisible;
+
             // islightvisible
             var a_diff_x = a_pointAtTime_x - lights_x,
                 a_diff_y = a_pointAtTime_y - lights_y,
@@ -1255,7 +1259,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_scene_ray_vector_y = a_diff_y,
                 a_scene_ray_vector_z = a_diff_z;
 
-            var a_closest_0 = 100000000,
+            var a_closest_0 = 10000000000,
                 a_closest_1_point_x = -1,
                 a_closest_1_point_y = -1,
                 a_closest_1_point_z = -1,
@@ -1269,40 +1273,40 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
             for (var i = 0; i < 3; i++) {
 
-                if (i == 0) {
-            a_object_point_x = n_objects_0_x;
-            a_object_point_y = n_objects_0_y;
-            a_object_point_z = n_objects_0_z;
-            a_object_color_x = n_objects_0_r;
-            a_object_color_y = n_objects_0_g;
-            a_object_color_z = n_objects_0_b;
-            a_object_specular = n_objects_0_spec;
-            a_object_lambert = n_objects_0_lamb;
-            a_object_ambient = n_objects_0_amb;
-            a_object_radius = n_objects_0_rad;
-        } else if (i == 1) {
-            a_object_point_x = n_objects_1_x;
-            a_object_point_y = n_objects_1_y;
-            a_object_point_z = n_objects_1_z;
-            a_object_color_x = n_objects_1_r;
-            a_object_color_y = n_objects_1_g;
-            a_object_color_z = n_objects_1_b;
-            a_object_specular = n_objects_1_spec;
-            a_object_lambert = n_objects_1_lamb;
-            a_object_ambient = n_objects_1_amb;
-            a_object_radius = n_objects_1_rad;
-        } else if (i == 2) {
-            a_object_point_x = n_objects_2_x;
-            a_object_point_y = n_objects_2_y;
-            a_object_point_z = n_objects_2_z;
-            a_object_color_x = n_objects_2_r;
-            a_object_color_y = n_objects_2_g;
-            a_object_color_z = n_objects_2_b;
-            a_object_specular = n_objects_2_spec;
-            a_object_lambert = n_objects_2_lamb;
-            a_object_ambient = n_objects_2_amb;
-            a_object_radius = n_objects_2_rad;
-        }
+                 if (i == 0) {
+                    a_object_point_x = n_objects_0_x;
+                    a_object_point_y = n_objects_0_y;
+                    a_object_point_z = n_objects_0_z;
+                    a_object_color_x = n_objects_0_r;
+                    a_object_color_y = n_objects_0_g;
+                    a_object_color_z = n_objects_0_b;
+                    a_object_specular = n_objects_0_spec;
+                    a_object_lambert = n_objects_0_lamb;
+                    a_object_ambient = n_objects_0_amb;
+                    a_object_radius = n_objects_0_rad;
+                } else if (i == 1) {
+                    a_object_point_x = n_objects_1_x;
+                    a_object_point_y = n_objects_1_y;
+                    a_object_point_z = n_objects_1_z;
+                    a_object_color_x = n_objects_1_r;
+                    a_object_color_y = n_objects_1_g;
+                    a_object_color_z = n_objects_1_b;
+                    a_object_specular = n_objects_1_spec;
+                    a_object_lambert = n_objects_1_lamb;
+                    a_object_ambient = n_objects_1_amb;
+                    a_object_radius = n_objects_1_rad;
+                } else if (i == 2) {
+                    a_object_point_x = n_objects_2_x;
+                    a_object_point_y = n_objects_2_y;
+                    a_object_point_z = n_objects_2_z;
+                    a_object_color_x = n_objects_2_r;
+                    a_object_color_y = n_objects_2_g;
+                    a_object_color_z = n_objects_2_b;
+                    a_object_specular = n_objects_2_spec;
+                    a_object_lambert = n_objects_2_lamb;
+                    a_object_ambient = n_objects_2_amb;
+                    a_object_radius = n_objects_2_rad;
+                }
 
                 // sphere intersection
                 // subtract
@@ -1317,7 +1321,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                         a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
                     a_discriminant = (a_object_radius * a_object_radius) - a_eoDot + (a_v * a_v);
                 if (a_discriminant < 0) {} else {
-                    a_dist = a_v - mathSqrt(a_discriminant);
+                    a_dist = a_v - Math.sqrt(a_discriminant);
                 }
                 //
 
@@ -1326,15 +1330,15 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                     a_closest_0 = a_dist;
 
                     a_closest_1_point_x = a_object_point_x;
-                        a_closest_1_point_y = a_object_point_y;
-                        a_closest_1_point_z = a_object_point_z;
-                        a_closest_1_color_x = a_object_color_x;
-                        a_closest_1_color_y = a_object_color_y;
-                        a_closest_1_color_z = a_object_color_z;
-                        a_closest_1_specular = a_object_specular;
-                        a_closest_1_lambert = a_object_lambert;
-                        a_closest_1_ambient = a_object_ambient;
-                        a_closest_1_radius = a_object_radius;
+                    a_closest_1_point_y = a_object_point_y;
+                    a_closest_1_point_z = a_object_point_z;
+                    a_closest_1_color_x = a_object_color_x;
+                    a_closest_1_color_y = a_object_color_y;
+                    a_closest_1_color_z = a_object_color_z;
+                    a_closest_1_specular = a_object_specular;
+                    a_closest_1_lambert = a_object_lambert;
+                    a_closest_1_ambient = a_object_ambient;
+                    a_closest_1_radius = a_object_radius;
                 }
             }
 
@@ -1350,6 +1354,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
+            // a_isLightVisible = a_distObject_0 > -0.005;
             //
 
             if (a_distObject_0 > -0.005) {
@@ -1368,7 +1373,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             }
         }
 
-         if (a_object_specular>0) {
+        if (a_object_specular>0) {
             // calculating reflected normal
             var a_reflectedRay_vector_x, a_reflectedRay_vector_y, a_reflectedRay_vector_z;
             //dotproduct
@@ -1394,7 +1399,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             var reflectedColor = trace_color4(color);
 
 
-             if ( reflectedColor>0){
+            if (reflectedColor>0) {
                 //scale and add
                 if (color == 0) {
                     a_c_x += reflectedColor * a_object_specular;;
@@ -1407,7 +1412,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
             }
         }
 
-        a_lambertAmount = mathMin(1, a_lambertAmount);
+        a_lambertAmount = Math.min(1, a_lambertAmount);
 
         if (color == 0) {
             a_c_x += a_a_x * a_lambertAmount * a_object_lambert;
