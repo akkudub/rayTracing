@@ -32,8 +32,8 @@ gpu.addFunction(trace_color3);
 gpu.addFunction(trace_color4);
 gpu.addFunction(Vector_dotProduct);
 gpu.addFunction(Vector_length);
-gpu.addFunction(mathMin);
-gpu.addFunction(mathSqrt);
+// gpu.addFunction(mathMin);
+// gpu.addFunction(mathSqrt);
 gpu.addFunction(mathTan);
 
 
@@ -202,8 +202,8 @@ function render(mode) {
 var planet1 = 0,
     planet2 = 0;
 
-var mykernel = render("gpu");
-var mycode   = render("cpu");
+var mykernel = render("cpu");
+var mycode   = render("gpu");
 mykernel(camera, objects, lights);
 var canvas = mykernel.getCanvas();
 document.getElementsByTagName('body')[0].appendChild(canvas);
@@ -250,14 +250,14 @@ function renderLoop() {
 window.onload = renderLoop;
 
 //stooopid functions
-var selection = 0;
+var selection = 1;
 
 function boost( element ) {
   if ( element.value == "Using CPU" ) {
-     selection = 1;
+     selection = 0;
      element.value = "Using GPU";
   } else {
-     selection = 0;
+     selection = 1;
      element.value = "Using CPU";
   }
 }
