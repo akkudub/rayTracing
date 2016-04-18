@@ -13,7 +13,7 @@ var ctx = mainCanvas.getContext('2d'),
 
 // # Throwing Rays
 function render(camera, objects, lights) {
-    // first 'unpack' the scene to make it easier to reference
+    // first 'unpack' the arays so gpu.js can understand
     var n_camera_point_x     = camera[0],
         n_camera_point_y     = camera[1],
         n_camera_point_z     = camera[2],
@@ -22,7 +22,46 @@ function render(camera, objects, lights) {
         n_camera_vector_y    = camera[5],
         n_camera_vector_z    = camera[6],
 
-        n_objects = objects,
+        n_objects_0_type = objects[0][0],
+        n_objects_0_x = objects[0][1],
+        n_objects_0_y = objects[0][2],
+        n_objects_0_z = objects[0][3],
+        n_objects_0_r = objects[0][4],
+        n_objects_0_g = objects[0][5],
+        n_objects_0_b = objects[0][6],
+        n_objects_0_spec = objects[0][7],
+        n_objects_0_lamb = objects[0][8],
+        n_objects_0_amb = objects[0][9],
+        n_objects_0_rad = objects[0][10],
+
+        n_objects_1_type = objects[1][0],
+        n_objects_1_x = objects[1][1],
+        n_objects_1_y = objects[1][2],
+        n_objects_1_z = objects[1][3],
+        n_objects_1_r = objects[1][4],
+        n_objects_1_g = objects[1][5],
+        n_objects_1_b = objects[1][6],
+        n_objects_1_spec = objects[1][7],
+        n_objects_1_lamb = objects[1][8],
+        n_objects_1_amb = objects[1][9],
+        n_objects_1_rad = objects[1][10],
+        
+        n_objects_2_type = objects[2][0],
+        n_objects_2_x = objects[2][1],
+        n_objects_2_y = objects[2][2],
+        n_objects_2_z = objects[2][3],
+        n_objects_2_r = objects[2][4],
+        n_objects_2_g = objects[2][5],
+        n_objects_2_b = objects[2][6],
+        n_objects_2_spec = objects[2][7],
+        n_objects_2_lamb = objects[2][8],
+        n_objects_2_amb = objects[2][9],
+        n_objects_2_rad = objects[2][10],
+
+
+n_objects_0_type,n_objects_0_x,n_objects_0_y,n_objects_0_z,n_objects_0_r,n_objects_0_g,n_objects_0_b,n_objects_0_spec,n_objects_0_lamb,n_objects_0_amb,n_objects_0_rad,
+n_objects_1_type,n_objects_1_x,n_objects_1_y,n_objects_1_z,n_objects_1_r,n_objects_1_g,n_objects_1_b,n_objects_1_spec,n_objects_1_lamb,n_objects_1_amb,n_objects_1_rad,
+n_objects_2_type,n_objects_2_x,n_objects_2_y,n_objects_2_z,n_objects_2_r,n_objects_2_g,n_objects_2_b,n_objects_2_spec,n_objects_2_lamb,n_objects_2_amb,n_objects_2_rad,
         n_lights_x = lights[0],
         n_lights_y = lights[1],
         n_lights_z = lights[2];
@@ -95,12 +134,22 @@ function render(camera, objects, lights) {
                 ray_v_y /= ray_v_len;
                 ray_v_z /= ray_v_len;
 
+
             color_R = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
-                            n_objects, n_lights_x, n_lights_y, n_lights_z, 0, 0);
+n_objects_0_type,n_objects_0_x,n_objects_0_y,n_objects_0_z,n_objects_0_r,n_objects_0_g,n_objects_0_b,n_objects_0_spec,n_objects_0_lamb,n_objects_0_amb,n_objects_0_rad,
+n_objects_1_type,n_objects_1_x,n_objects_1_y,n_objects_1_z,n_objects_1_r,n_objects_1_g,n_objects_1_b,n_objects_1_spec,n_objects_1_lamb,n_objects_1_amb,n_objects_1_rad,
+n_objects_2_type,n_objects_2_x,n_objects_2_y,n_objects_2_z,n_objects_2_r,n_objects_2_g,n_objects_2_b,n_objects_2_spec,n_objects_2_lamb,n_objects_2_amb,n_objects_2_rad,
+n_lights_x, n_lights_y, n_lights_z, 0, 0);
             color_G = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
-                            n_objects, n_lights_x, n_lights_y, n_lights_z, 0, 1);
+n_objects_0_type,n_objects_0_x,n_objects_0_y,n_objects_0_z,n_objects_0_r,n_objects_0_g,n_objects_0_b,n_objects_0_spec,n_objects_0_lamb,n_objects_0_amb,n_objects_0_rad,
+n_objects_1_type,n_objects_1_x,n_objects_1_y,n_objects_1_z,n_objects_1_r,n_objects_1_g,n_objects_1_b,n_objects_1_spec,n_objects_1_lamb,n_objects_1_amb,n_objects_1_rad,
+n_objects_2_type,n_objects_2_x,n_objects_2_y,n_objects_2_z,n_objects_2_r,n_objects_2_g,n_objects_2_b,n_objects_2_spec,n_objects_2_lamb,n_objects_2_amb,n_objects_2_rad,
+n_lights_x, n_lights_y, n_lights_z, 0, 1);
             color_B = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
-                            n_objects, n_lights_x, n_lights_y, n_lights_z, 0, 2);
+n_objects_0_type,n_objects_0_x,n_objects_0_y,n_objects_0_z,n_objects_0_r,n_objects_0_g,n_objects_0_b,n_objects_0_spec,n_objects_0_lamb,n_objects_0_amb,n_objects_0_rad,
+n_objects_1_type,n_objects_1_x,n_objects_1_y,n_objects_1_z,n_objects_1_r,n_objects_1_g,n_objects_1_b,n_objects_1_spec,n_objects_1_lamb,n_objects_1_amb,n_objects_1_rad,
+n_objects_2_type,n_objects_2_x,n_objects_2_y,n_objects_2_z,n_objects_2_r,n_objects_2_g,n_objects_2_b,n_objects_2_spec,n_objects_2_lamb,n_objects_2_amb,n_objects_2_rad,
+n_lights_x, n_lights_y, n_lights_z, 0, 2);
 
             // tracing begins:
 
@@ -118,8 +167,10 @@ function render(camera, objects, lights) {
     ctx.putImageData(data, 0, 0);
 }
 
-function trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
-        objects, lights_x, lights_y, lights_z, depth, color) {
+function trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,n_objects_0_type,n_objects_0_x,n_objects_0_y,n_objects_0_z,n_objects_0_r,n_objects_0_g,n_objects_0_b,n_objects_0_spec,n_objects_0_lamb,n_objects_0_amb,n_objects_0_rad,
+n_objects_1_type,n_objects_1_x,n_objects_1_y,n_objects_1_z,n_objects_1_r,n_objects_1_g,n_objects_1_b,n_objects_1_spec,n_objects_1_lamb,n_objects_1_amb,n_objects_1_rad,
+n_objects_2_type,n_objects_2_x,n_objects_2_y,n_objects_2_z,n_objects_2_r,n_objects_2_g,n_objects_2_b,n_objects_2_spec,n_objects_2_lamb,n_objects_2_amb,n_objects_2_rad,
+lights_x, lights_y, lights_z, depth, color) {
     if (depth > 3)
         return;
     var a_ray_point_x  = ray_x ,
@@ -141,16 +192,41 @@ function trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
              a_closest_1_radius   = null;
 
     for (var i = 0; i < 3; i++) {
-        var a_object_point_x     = objects[i][1],
-            a_object_point_y     = objects[i][2] ,
-            a_object_point_z     = objects[i][3] ,
-            a_object_color_x     = objects[i][4],
-            a_object_color_y     = objects[i][5],
-            a_object_color_z     = objects[i][6] ,
-            a_object_specular    = objects[i][7] ,
-            a_object_lambert     = objects[i][8] ,
-            a_object_ambient     = objects[i][9] ,
-            a_object_radius      = objects[i][10];
+        if (i == 0) {
+            var a_object_point_x     = n_objects_0_x    ,
+                a_object_point_y     = n_objects_0_y    ,
+                a_object_point_z     = n_objects_0_z    ,
+                a_object_color_x     = n_objects_0_r    ,
+                a_object_color_y     = n_objects_0_g    ,
+                a_object_color_z     = n_objects_0_b    ,
+                a_object_specular    = n_objects_0_spec ,
+                a_object_lambert     = n_objects_0_lamb ,
+                a_object_ambient     = n_objects_0_amb  ,
+                a_object_radius      = n_objects_0_rad  ;
+        }else if (i == 1) {
+            var a_object_point_x     = n_objects_1_x    ,
+                a_object_point_y     = n_objects_1_y    ,
+                a_object_point_z     = n_objects_1_z    ,
+                a_object_color_x     = n_objects_1_r    ,
+                a_object_color_y     = n_objects_1_g    ,
+                a_object_color_z     = n_objects_1_b    ,
+                a_object_specular    = n_objects_1_spec ,
+                a_object_lambert     = n_objects_1_lamb ,
+                a_object_ambient     = n_objects_1_amb  ,
+                a_object_radius      = n_objects_1_rad  ;
+        }else if (i == 2) {
+            var a_object_point_x     = n_objects_2_x    ,
+                a_object_point_y     = n_objects_2_y    ,
+                a_object_point_z     = n_objects_2_z    ,
+                a_object_color_x     = n_objects_2_r    ,
+                a_object_color_y     = n_objects_2_g    ,
+                a_object_color_z     = n_objects_2_b    ,
+                a_object_specular    = n_objects_2_spec ,
+                a_object_lambert     = n_objects_2_lamb ,
+                a_object_ambient     = n_objects_2_amb  ,
+                a_object_radius      = n_objects_2_rad  ;
+        }
+
         // sphere intersection
         // subtract
         var a_eye_to_center_x = a_object_point_x - a_ray_point_x,
@@ -385,7 +461,10 @@ function trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
             // recursive call BEGINSSSSSS
             var reflectedColor = trace_color(a_pointAtTime_x, a_pointAtTime_y, a_pointAtTime_z,
                             a_reflectedRay_vector_x ,a_reflectedRay_vector_y ,a_reflectedRay_vector_z,
-                            objects, lights_x, lights_y, lights_z, ++depth, color);
+n_objects_0_type,n_objects_0_x,n_objects_0_y,n_objects_0_z,n_objects_0_r,n_objects_0_g,n_objects_0_b,n_objects_0_spec,n_objects_0_lamb,n_objects_0_amb,n_objects_0_rad,
+n_objects_1_type,n_objects_1_x,n_objects_1_y,n_objects_1_z,n_objects_1_r,n_objects_1_g,n_objects_1_b,n_objects_1_spec,n_objects_1_lamb,n_objects_1_amb,n_objects_1_rad,
+n_objects_2_type,n_objects_2_x,n_objects_2_y,n_objects_2_z,n_objects_2_r,n_objects_2_g,n_objects_2_b,n_objects_2_spec,n_objects_2_lamb,n_objects_2_amb,n_objects_2_rad,
+lights_x, lights_y, lights_z, ++depth, color);
             
 
             if (reflectedColor) {
