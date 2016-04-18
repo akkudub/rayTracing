@@ -71,7 +71,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
         // sphere intersection
         // subtract
-        a_dist = -1;
+        var a_dist = -1;
         var a_eye_to_center_x = a_object_point_x - a_ray_point_x,
             a_eye_to_center_y = a_object_point_y - a_ray_point_y,
             a_eye_to_center_z = a_object_point_z - a_ray_point_z;
@@ -277,10 +277,10 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
-            a_isLightVisible = a_distObject_0 > -0.005;
+            // a_isLightVisible = a_distObject_0 > -0.005;
             //
 
-            if (a_isLightVisible) {
+            if (a_distObject_0 > -0.005) {
                 // subtract first
                 a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
@@ -431,7 +431,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
         // sphere intersection
         // subtract
-        a_dist = -1;
+        var a_dist = -1;
         var a_eye_to_center_x = a_object_point_x - a_ray_point_x,
             a_eye_to_center_y = a_object_point_y - a_ray_point_y,
             a_eye_to_center_z = a_object_point_z - a_ray_point_z;
@@ -637,10 +637,10 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
-            a_isLightVisible = a_distObject_0 > -0.005;
+            // a_isLightVisible = a_distObject_0 > -0.005;
             //
 
-            if (a_isLightVisible) {
+            if (a_distObject_0 > -0.005) {
                 // subtract first
                 a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
@@ -717,7 +717,6 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         }
     }
 }
-
 function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_0_type, n_objects_0_x, n_objects_0_y, n_objects_0_z, n_objects_0_r, n_objects_0_g, n_objects_0_b, n_objects_0_spec, n_objects_0_lamb, n_objects_0_amb, n_objects_0_rad,
     n_objects_1_type, n_objects_1_x, n_objects_1_y, n_objects_1_z, n_objects_1_r, n_objects_1_g, n_objects_1_b, n_objects_1_spec, n_objects_1_lamb, n_objects_1_amb, n_objects_1_rad,
     n_objects_2_type, n_objects_2_x, n_objects_2_y, n_objects_2_z, n_objects_2_r, n_objects_2_g, n_objects_2_b, n_objects_2_spec, n_objects_2_lamb, n_objects_2_amb, n_objects_2_rad,
@@ -791,7 +790,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
         // sphere intersection
         // subtract
-        a_dist = -1;
+        var a_dist = -1;
         var a_eye_to_center_x = a_object_point_x - a_ray_point_x,
             a_eye_to_center_y = a_object_point_y - a_ray_point_y,
             a_eye_to_center_z = a_object_point_z - a_ray_point_z;
@@ -997,10 +996,10 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
-            a_isLightVisible = a_distObject_0 > -0.005;
+            // a_isLightVisible = a_distObject_0 > -0.005;
             //
 
-            if (a_isLightVisible) {
+            if (a_distObject_0 > -0.005) {
                 // subtract first
                 a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
@@ -1077,7 +1076,6 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         }
     }
 }
-
 function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_0_type, n_objects_0_x, n_objects_0_y, n_objects_0_z, n_objects_0_r, n_objects_0_g, n_objects_0_b, n_objects_0_spec, n_objects_0_lamb, n_objects_0_amb, n_objects_0_rad,
     n_objects_1_type, n_objects_1_x, n_objects_1_y, n_objects_1_z, n_objects_1_r, n_objects_1_g, n_objects_1_b, n_objects_1_spec, n_objects_1_lamb, n_objects_1_amb, n_objects_1_rad,
     n_objects_2_type, n_objects_2_x, n_objects_2_y, n_objects_2_z, n_objects_2_r, n_objects_2_g, n_objects_2_b, n_objects_2_spec, n_objects_2_lamb, n_objects_2_amb, n_objects_2_rad,
@@ -1151,7 +1149,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
         // sphere intersection
         // subtract
-        a_dist = -1;
+        var a_dist = -1;
         var a_eye_to_center_x = a_object_point_x - a_ray_point_x,
             a_eye_to_center_y = a_object_point_y - a_ray_point_y,
             a_eye_to_center_z = a_object_point_z - a_ray_point_z;
@@ -1357,10 +1355,10 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
                 a_distObject_1_ambient = a_closest_1_ambient,
                 a_distObject_1_radius = a_closest_1_radius;
             ////////
-            a_isLightVisible = a_distObject_0 > -0.005;
+            // a_isLightVisible = a_distObject_0 > -0.005;
             //
 
-            if (a_isLightVisible) {
+            if (a_distObject_0 > -0.005) {
                 // subtract first
                 a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
@@ -1433,7 +1431,8 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
     }
 }
 
+
 function trace_color4(x) {
     // we do not trace beyond 4 bounces
-    return;
+    return 1;
 }
