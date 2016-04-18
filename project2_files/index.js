@@ -23,7 +23,9 @@ function render(camera, objects, lights) {
         n_camera_vector_z    = camera[6],
 
         n_objects = objects,
-        n_lights = lights;
+        n_lights_x = lights[0],
+        n_lights_y = lights[1],
+        n_lights_z = lights[2];
 
     // subtract
     var eyeVector_x = n_camera_vector_x - n_camera_point_x,
@@ -93,9 +95,12 @@ function render(camera, objects, lights) {
                 ray_v_y /= ray_v_len;
                 ray_v_z /= ray_v_len;
 
-            color_R = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects, n_lights, 0, 0);
-            color_G = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects, n_lights, 0, 1);
-            color_B = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects, n_lights, 0, 2);
+            color_R = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
+                            n_objects, n_lights_x, n_lights_y, n_lights_z, 0, 0);
+            color_G = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
+                            n_objects, n_lights_x, n_lights_y, n_lights_z, 0, 1);
+            color_B = trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
+                            n_objects, n_lights_x, n_lights_y, n_lights_z, 0, 2);
 
             // tracing begins:
 
@@ -113,7 +118,8 @@ function render(camera, objects, lights) {
     ctx.putImageData(data, 0, 0);
 }
 
-function trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, objects, lights, depth, color) {
+function trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
+        objects, lights_x, lights_y, lights_z, depth, color) {
     if (depth > 3)
         return;
     var a_ray_point_x  = ray_x ,
@@ -240,15 +246,12 @@ function trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, objects, li
             a_lambertAmount = 0;
 
         if (a_object_lambert) {
-            var a_lightPoint_x = lights[0],
-                a_lightPoint_y = lights[1],
-                a_lightPoint_z = lights[2],
-                a_isLightVisible;
+            var a_isLightVisible;
 
             // islightvisible
-            var a_diff_x = a_pointAtTime_x - a_lightPoint_x,
-                a_diff_y = a_pointAtTime_y - a_lightPoint_y,
-                a_diff_z = a_pointAtTime_z - a_lightPoint_z,
+            var a_diff_x = a_pointAtTime_x - lights_x,
+                a_diff_y = a_pointAtTime_y - lights_y,
+                a_diff_z = a_pointAtTime_z - lights_z,
                 a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
                 a_diff_x /= a_diff_len;
                 a_diff_y /= a_diff_len;
@@ -337,9 +340,9 @@ function trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, objects, li
 
             if (a_isLightVisible){
             // subtract first
-                a_diff_x = a_lightPoint_x - a_pointAtTime_x,
-                a_diff_y = a_lightPoint_y - a_pointAtTime_y,
-                a_diff_z = a_lightPoint_z - a_pointAtTime_z,
+                a_diff_x = lights_x - a_pointAtTime_x,
+                a_diff_y = lights_y - a_pointAtTime_y,
+                a_diff_z = lights_z - a_pointAtTime_z,
                 a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
                 a_diff_x /= a_diff_len;
                 a_diff_y /= a_diff_len;
@@ -382,7 +385,7 @@ function trace_color(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, objects, li
             // recursive call BEGINSSSSSS
             var reflectedColor = trace_color(a_pointAtTime_x, a_pointAtTime_y, a_pointAtTime_z,
                             a_reflectedRay_vector_x ,a_reflectedRay_vector_y ,a_reflectedRay_vector_z,
-                            objects, lights, ++depth, color);
+                            objects, lights_x, lights_y, lights_z, ++depth, color);
             
 
             if (reflectedColor) {
