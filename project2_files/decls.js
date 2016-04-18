@@ -10,6 +10,8 @@ var fps = { startTime : 0, frameNumber : 0,
             }
           };
 
+
+
 var Vector_UP_x = 0,
    Vector_UP_y = 1,
    Vector_UP_z = 0,
