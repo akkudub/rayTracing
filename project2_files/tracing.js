@@ -282,7 +282,7 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
             if (a_distObject_0 > -0.005) {
                 // subtract first
-                a_diff_x = lights_x - a_pointAtTime_x,
+                var a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
                     a_diff_z = lights_z - a_pointAtTime_z,
                     a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
@@ -357,7 +357,6 @@ function trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         }
     }
 }
-
 function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_0_type, n_objects_0_x, n_objects_0_y, n_objects_0_z, n_objects_0_r, n_objects_0_g, n_objects_0_b, n_objects_0_spec, n_objects_0_lamb, n_objects_0_amb, n_objects_0_rad,
     n_objects_1_type, n_objects_1_x, n_objects_1_y, n_objects_1_z, n_objects_1_r, n_objects_1_g, n_objects_1_b, n_objects_1_spec, n_objects_1_lamb, n_objects_1_amb, n_objects_1_rad,
     n_objects_2_type, n_objects_2_x, n_objects_2_y, n_objects_2_z, n_objects_2_r, n_objects_2_g, n_objects_2_b, n_objects_2_spec, n_objects_2_lamb, n_objects_2_amb, n_objects_2_rad,
@@ -517,9 +516,9 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         var a_a_x = a_object_color_x,
             a_a_y = a_object_color_y,
             a_a_z = a_object_color_z,
-            a_c_x = Vector_ZERO_x,
-            a_c_y = Vector_ZERO_y,
-            a_c_z = Vector_ZERO_z,
+            a_c_x = 0,
+            a_c_y = 0,
+            a_c_z = 0,
             a_lambertAmount = 0;
 
         if (a_object_lambert>0) {
@@ -642,7 +641,7 @@ function trace_color1(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
             if (a_distObject_0 > -0.005) {
                 // subtract first
-                a_diff_x = lights_x - a_pointAtTime_x,
+                var a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
                     a_diff_z = lights_z - a_pointAtTime_z,
                     a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
@@ -876,9 +875,9 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         var a_a_x = a_object_color_x,
             a_a_y = a_object_color_y,
             a_a_z = a_object_color_z,
-            a_c_x = Vector_ZERO_x,
-            a_c_y = Vector_ZERO_y,
-            a_c_z = Vector_ZERO_z,
+            a_c_x = 0,
+            a_c_y = 0,
+            a_c_z = 0,
             a_lambertAmount = 0;
 
         if (a_object_lambert>0) {
@@ -1001,7 +1000,7 @@ function trace_color2(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
             if (a_distObject_0 > -0.005) {
                 // subtract first
-                a_diff_x = lights_x - a_pointAtTime_x,
+                var a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
                     a_diff_z = lights_z - a_pointAtTime_z,
                     a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
@@ -1235,9 +1234,9 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
         var a_a_x = a_object_color_x,
             a_a_y = a_object_color_y,
             a_a_z = a_object_color_z,
-            a_c_x = Vector_ZERO_x,
-            a_c_y = Vector_ZERO_y,
-            a_c_z = Vector_ZERO_z,
+            a_c_x = 0,
+            a_c_y = 0,
+            a_c_z = 0,
             a_lambertAmount = 0;
 
         if (a_object_lambert>0) {
@@ -1360,7 +1359,7 @@ function trace_color3(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z, n_objects_
 
             if (a_distObject_0 > -0.005) {
                 // subtract first
-                a_diff_x = lights_x - a_pointAtTime_x,
+                var a_diff_x = lights_x - a_pointAtTime_x,
                     a_diff_y = lights_y - a_pointAtTime_y,
                     a_diff_z = lights_z - a_pointAtTime_z,
                     a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
