@@ -115,198 +115,201 @@ function render(scene) {
 }
 
 // # Trace
-function trace(ray, scene, depth) {
-    if (depth > 3) return;
-
-
+function trace(a_ray, scene, depth) {
+    if (depth > 3)
+        return;
     // intersectscene for calculating the distobject
-    var closest = [Infinity, null];
+    var a_closest = [Infinity, null];
 
     for (var i = 0; i < scene.objects.length; i++) {
-        var object = scene.objects[i], dist;
+        var a_object = scene.objects[i], a_dist;
         // dist = sphereIntersection(object, ray);
 
         // sphere intersection
         // subtract
-        var eye_to_center_x = object.point.x - ray.point.x,
-            eye_to_center_y = object.point.y - ray.point.y,
-            eye_to_center_z = object.point.z - ray.point.z;
+        var a_eye_to_center_x = a_object.point.x - a_ray.point.x,
+            a_eye_to_center_y = a_object.point.y - a_ray.point.y,
+            a_eye_to_center_z = a_object.point.z - a_ray.point.z;
 
-        var v = Vector_dotProduct(eye_to_center_x, eye_to_center_y, eye_to_center_z,
-                ray.vector.x, ray.vector.y, ray.vector.z),
-            eoDot = Vector_dotProduct(eye_to_center_x, eye_to_center_y, eye_to_center_z,
-                    eye_to_center_x, eye_to_center_y, eye_to_center_z),
-            discriminant = (object.radius * object.radius) - eoDot + (v * v);
-        if (discriminant < 0) {
+        var a_v = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
+                a_ray.vector.x, a_ray.vector.y, a_ray.vector.z),
+            a_eoDot = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
+                    a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
+            a_discriminant = (a_object.radius * a_object.radius) - a_eoDot + (a_v * a_v);
+        if (a_discriminant < 0) {
         } else {
-            dist = v - Math.sqrt(discriminant);
+            a_dist = a_v - Math.sqrt(a_discriminant);
         }
         //
 
-        if (dist !== undefined && dist < closest[0]) {
-            closest = [dist, object];
+        if (a_dist !== undefined && a_dist < a_closest[0]) {
+            a_closest = [a_dist, a_object];
         }
     }
 
-    var distObject = closest;
+    var a_distObject = a_closest;
     /////
 
-    if (distObject[0] === Infinity) {
+    if (a_distObject[0] === Infinity) {
         return Vector.WHITE;
     }
 
-    var dist = distObject[0],
-        object = distObject[1];
+    var a_dist = a_distObject[0],
+        a_object = a_distObject[1];
 
-    // var pointAtTime = Vector.add(ray.point, Vector.scale(ray.vector, dist));
-    var pointAtTime, pointAtTime_x, pointAtTime_y, pointAtTime_z;
+    // var a_pointAtTime = Vector.add(ray.point, Vector.scale(ray.vector, dist));
+    var a_pointAtTime, a_pointAtTime_x, a_pointAtTime_y, a_pointAtTime_z;
     // scaling first
-        pointAtTime_x = ray.vector.x * dist;
-        pointAtTime_y = ray.vector.y * dist;
-        pointAtTime_z = ray.vector.z * dist;
+        a_pointAtTime_x = a_ray.vector.x * a_dist;
+        a_pointAtTime_y = a_ray.vector.y * a_dist;
+        a_pointAtTime_z = a_ray.vector.z * a_dist;
     //adding
-        pointAtTime_x += ray.point.x;
-        pointAtTime_y += ray.point.y;
-        pointAtTime_z += ray.point.z;
-    pointAtTime = {x:pointAtTime_x, y:pointAtTime_y, z:pointAtTime_z};
+        a_pointAtTime_x += a_ray.point.x;
+        a_pointAtTime_y += a_ray.point.y;
+        a_pointAtTime_z += a_ray.point.z;
+    a_pointAtTime = {x:a_pointAtTime_x, y:a_pointAtTime_y, z:a_pointAtTime_z};
 
     // calculating sphere normal first
-    var sphr_normal, sphr_normal_x, sphr_normal_y, sphr_normal_z;
+    var a_sphr_normal, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z;
         //     return Vector.unitVector(Vector.subtract(b, a.point));
         // subtract
-        sphr_normal_x = pointAtTime_x - object.point.x;
-        sphr_normal_y = pointAtTime_y - object.point.y;
-        sphr_normal_z = pointAtTime_z - object.point.z;
+        a_sphr_normal_x = a_pointAtTime_x - a_object.point.x;
+        a_sphr_normal_y = a_pointAtTime_y - a_object.point.y;
+        a_sphr_normal_z = a_pointAtTime_z - a_object.point.z;
         // unit vector
-    var sphr_normal_len = Vector_length(sphr_normal_x,sphr_normal_y,sphr_normal_z);
-        sphr_normal_x /= sphr_normal_len;
-        sphr_normal_y /= sphr_normal_len;
-        sphr_normal_z /= sphr_normal_len;
-    sphr_normal = {x:sphr_normal_x, y:sphr_normal_y, z:sphr_normal_z};
+    var a_sphr_normal_len = Vector_length(a_sphr_normal_x,a_sphr_normal_y,a_sphr_normal_z);
+        a_sphr_normal_x /= a_sphr_normal_len;
+        a_sphr_normal_y /= a_sphr_normal_len;
+        a_sphr_normal_z /= a_sphr_normal_len;
+    a_sphr_normal = {x:a_sphr_normal_x, y:a_sphr_normal_y, z:a_sphr_normal_z};
 
     // suraface calculation
-    var b_x = object.color.x,
-        b_y = object.color.y,
-        b_z = object.color.z,
-        c_x = Vector_ZERO_x,
-        c_y = Vector_ZERO_y,
-        c_z = Vector_ZERO_z,
-        lambertAmount = 0;
+    var a_b_x = a_object.color.x,
+        a_b_y = a_object.color.y,
+        a_b_z = a_object.color.z,
+        a_c_x = Vector_ZERO_x,
+        a_c_y = Vector_ZERO_y,
+        a_c_z = Vector_ZERO_z,
+        a_lambertAmount = 0;
 
-    if (object.lambert) {
+    if (a_object.lambert) {
         for (var i = 0; i < scene.lights.length; i++) {
-            var lightPoint = scene.lights[0],
-                isLightVisible;
+            var a_lightPoint = scene.lights[0],
+                a_isLightVisible;
 
             // islightvisible
-            var diff_x = pointAtTime_x - lightPoint.x,
-                diff_y = pointAtTime_y - lightPoint.y,
-                diff_z = pointAtTime_z - lightPoint.z,
-                diff_len = Vector_length(diff_x, diff_y, diff_z);
-                diff_x /= diff_len;
-                diff_y /= diff_len;
-                diff_z /= diff_len;
+            var a_diff_x = a_pointAtTime_x - a_lightPoint.x,
+                a_diff_y = a_pointAtTime_y - a_lightPoint.y,
+                a_diff_z = a_pointAtTime_z - a_lightPoint.z,
+                a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
+                a_diff_x /= a_diff_len;
+                a_diff_y /= a_diff_len;
+                a_diff_z /= a_diff_len;
 
                 // intersectscene for distobject
-                var scene_ray = {point: pointAtTime, vector: {x:diff_x, y:diff_y, z:diff_z}};
-                closest = [Infinity, null];
+                var a_scene_ray = {point: a_pointAtTime, vector: {x:a_diff_x, y:a_diff_y, z:a_diff_z}};
+                a_closest = [Infinity, null];
 
                 for (var i = 0; i < scene.objects.length; i++) {
-                    object = scene.objects[i], dist;
+                    a_object = scene.objects[i], a_dist;
                     // dist = sphereIntersection(object, ray);
 
                     // sphere intersection
                     // subtract
-                    eye_to_center_x = object.point.x - scene_ray.point.x,
-                    eye_to_center_y = object.point.y - scene_ray.point.y,
-                    eye_to_center_z = object.point.z - scene_ray.point.z;
+                    a_eye_to_center_x = a_object.point.x - a_scene_ray.point.x,
+                    a_eye_to_center_y = a_object.point.y - a_scene_ray.point.y,
+                    a_eye_to_center_z = a_object.point.z - a_scene_ray.point.z;
 
-                    v = Vector_dotProduct(eye_to_center_x, eye_to_center_y, eye_to_center_z,
-                            scene_ray.vector.x, scene_ray.vector.y, scene_ray.vector.z),
-                    eoDot = Vector_dotProduct(eye_to_center_x, eye_to_center_y, eye_to_center_z,
-                                eye_to_center_x, eye_to_center_y, eye_to_center_z),
-                        discriminant = (object.radius * object.radius) - eoDot + (v * v);
-                    if (discriminant < 0) {
+                    a_v = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
+                            a_scene_ray.vector.x, a_scene_ray.vector.y, a_scene_ray.vector.z),
+                    a_eoDot = Vector_dotProduct(a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z,
+                                a_eye_to_center_x, a_eye_to_center_y, a_eye_to_center_z),
+                        a_discriminant = (a_object.radius * a_object.radius) - a_eoDot + (a_v * a_v);
+                    if (a_discriminant < 0) {
                     } else {
-                        dist = v - Math.sqrt(discriminant);
+                        a_dist = a_v - Math.sqrt(a_discriminant);
                     }
                     //
 
-                    if (dist !== undefined && dist < closest[0]) {
-                        closest = [dist, object];
+                    if (a_dist !== undefined && a_dist < a_closest[0]) {
+                        a_closest = [a_dist, a_object];
                     }
                 }
 
-                distObject = closest;
+                a_distObject = a_closest;
                 ////////
 
-            isLightVisible = distObject[0] > -0.005;
+            a_isLightVisible = a_distObject[0] > -0.005;
             //
 
-            if (!isLightVisible) continue;
+            if (!a_isLightVisible) continue;
             // subtract first
-                diff_x = lightPoint.x - pointAtTime_x,
-                diff_y = lightPoint.y - pointAtTime_y,
-                diff_z = lightPoint.z - pointAtTime_z,
-                diff_len = Vector_length(diff_x, diff_y, diff_z);
-                diff_x /= diff_len;
-                diff_y /= diff_len;
-                diff_z /= diff_len;
+                a_diff_x = a_lightPoint.x - a_pointAtTime_x,
+                a_diff_y = a_lightPoint.y - a_pointAtTime_y,
+                a_diff_z = a_lightPoint.z - a_pointAtTime_z,
+                a_diff_len = Vector_length(a_diff_x, a_diff_y, a_diff_z);
+                a_diff_x /= a_diff_len;
+                a_diff_y /= a_diff_len;
+                a_diff_z /= a_diff_len;
 
-                contribution = Vector_dotProduct(diff_x, diff_y, diff_z, sphr_normal_x,sphr_normal_y,sphr_normal_z);
+                contribution = Vector_dotProduct(a_diff_x, a_diff_y, a_diff_z, a_sphr_normal_x,a_sphr_normal_y,a_sphr_normal_z);
 
-            if (contribution > 0) lambertAmount += contribution;
+            if (contribution > 0) a_lambertAmount += contribution;
         }
     }
 
-    if (object.specular) {
+    if (a_object.specular) {
         // calculating reflected normal
-        var reflectedRay_vector_x, reflectedRay_vector_y, reflectedRay_vector_z;
+        var a_reflectedRay_vector_x, a_reflectedRay_vector_y, a_reflectedRay_vector_z;
             //dotproduct
-            var scale_factor = Vector_dotProduct(ray.vector.x, ray.vector.y, ray.vector.z, sphr_normal_x, sphr_normal_y, sphr_normal_z);
+            var scale_factor = Vector_dotProduct(a_ray.vector.x, a_ray.vector.y, a_ray.vector.z, a_sphr_normal_x, a_sphr_normal_y, a_sphr_normal_z);
             //scale
-            var temp_x, temp_y, temp_z;
+            var a_temp_x, a_temp_y, a_temp_z;
 
-            temp_x = sphr_normal_x * scale_factor;
-            temp_y = sphr_normal_y * scale_factor;
-            temp_z = sphr_normal_z * scale_factor;
+            a_temp_x = a_sphr_normal_x * scale_factor;
+            a_temp_y = a_sphr_normal_y * scale_factor;
+            a_temp_z = a_sphr_normal_z * scale_factor;
 
             //scale 2nd
-            temp_x = ray.vector.x * 2;
-            temp_y = ray.vector.y * 2;
-            temp_z = ray.vector.z * 2;
+            a_temp_x = a_ray.vector.x * 2;
+            a_temp_y = a_ray.vector.y * 2;
+            a_temp_z = a_ray.vector.z * 2;
 
             //subtract
-            reflectedRay_vector_x = temp_x - ray.vector.x;
-            reflectedRay_vector_y = temp_y - ray.vector.y;
-            reflectedRay_vector_z = temp_z - ray.vector.z;
+            a_reflectedRay_vector_x = a_temp_x - a_ray.vector.x;
+            a_reflectedRay_vector_y = a_temp_y - a_ray.vector.y;
+            a_reflectedRay_vector_z = a_temp_z - a_ray.vector.z;
         //
 
-        var reflectedRay = {
-            point: pointAtTime,
-            vector: {x:reflectedRay_vector_x ,y:reflectedRay_vector_y ,z:reflectedRay_vector_z}
+        var a_reflectedRay = {
+            point: a_pointAtTime,
+            vector: {x:a_reflectedRay_vector_x ,y:a_reflectedRay_vector_y ,z:a_reflectedRay_vector_z}
         };
-        var reflectedColor = trace(reflectedRay, scene, ++depth);
+
+        // recursive call BEGINSSSSSS
+        var reflectedColor = trace(a_reflectedRay, scene, ++depth);
+        
+
         if (reflectedColor) {
             //scale and add
-            c_x += reflectedColor.x * object.specular;
-            c_y += reflectedColor.y * object.specular;
-            c_z += reflectedColor.z * object.specular;
+            a_c_x += reflectedColor.x * a_object.specular;
+            a_c_y += reflectedColor.y * a_object.specular;
+            a_c_z += reflectedColor.z * a_object.specular;
         }
     }
 
-    lambertAmount = Math.min(1, lambertAmount);
+    a_lambertAmount = Math.min(1, a_lambertAmount);
 
     // scale 1
-    c_x += b_x * lambertAmount * object.lambert;
-    c_y += b_y * lambertAmount * object.lambert;
-    c_z += b_z * lambertAmount * object.lambert;
+    a_c_x += a_b_x * a_lambertAmount * a_object.lambert;
+    a_c_y += a_b_y * a_lambertAmount * a_object.lambert;
+    a_c_z += a_b_z * a_lambertAmount * a_object.lambert;
     // scale 2
-    c_x += b_x * object.ambient;
-    c_y += b_y * object.ambient;
-    c_z += b_z * object.ambient;
+    a_c_x += a_b_x * a_object.ambient;
+    a_c_y += a_b_y * a_object.ambient;
+    a_c_z += a_b_z * a_object.ambient;
 
-    return {x:c_x, y:c_y, z:c_z};
+    return {x:a_c_x, y:a_c_y, z:a_c_z};
 }
 
 var planet1 = 0,
