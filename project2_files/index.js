@@ -1,27 +1,28 @@
 // # GPU Aceelerated Raytracing
 
-// # Setup
-var mainCanvas = document.getElementById('mainCanvas'),
-    width = 800 * 0.5,
-    height = 800 * 0.5;
+var selection = 1;
 
-mainCanvas.width = width;
-mainCanvas.height = height;
-mainCanvas.style.cssText = 'width:' + (width * 2) + 'px;height:' + (height*2) + 'px';
-var ctx = mainCanvas.getContext('2d'),
-    data = ctx.getImageData(0, 0, width, height);
+function boost(element) {
+    if (element.value == "Using CPU") {
+        selection = 1;
+        element.value = "Using GPU";
+    } else {
+        selection = 0;
+        element.value = "Using CPU";
+    }
+}
 
-function mathTan(x){
+function mathTan(x) {
     return Math.tan(x);
 }
 
-function mathMin(x, y){
+function mathMin(x, y) {
     return Math.min(x, y);
 }
-function mathSqrt(x){
+
+function mathSqrt(x) {
     return Math.sqrt(x);
 }
-
 
 var gpu = new GPU();
 
@@ -36,10 +37,13 @@ gpu.addFunction(Vector_length);
 // gpu.addFunction(mathSqrt);
 gpu.addFunction(mathTan);
 
+var width = 400,
+    height = 400;
+
 var debug_array = [];
 for (var i = 400 - 1; i >= 0; i--) {
     var a = [];
-    for (var j = 400- 1; j >= 0; j--) {
+    for (var j = 400 - 1; j >= 0; j--) {
         a.push(0);
     }
     debug_array.push(a);
@@ -49,27 +53,27 @@ for (var i = 400 - 1; i >= 0; i--) {
 function render(mode) {
 
     var opt = {
-         dimensions: [width,width],
-         debug: true,
-         graphical: true,
-         safeTextureReadHack: false,
-         mode: mode
-      };
+        dimensions: [width, height],
+        debug: true,
+        graphical: true,
+        safeTextureReadHack: false,
+        mode: mode
+    };
 
-    var task = gpu.createKernel(function(camera, objects, lights){
-    // first 'unpack' the arays so gpu.js can understand
+    var task = gpu.createKernel(function(camera, objects, lights) {
+        // first 'unpack' the arays so gpu.js can understand
         var height = this.dimensions.y,
             width = this.dimensions.x,
             Vector_UP_x = 0,
-           Vector_UP_y = 1,
-           Vector_UP_z = 0;
-        var n_camera_point_x     = camera[0],
-            n_camera_point_y     = camera[1],
-            n_camera_point_z     = camera[2],
+            Vector_UP_y = 1,
+            Vector_UP_z = 0;
+        var n_camera_point_x = camera[0],
+            n_camera_point_y = camera[1],
+            n_camera_point_z = camera[2],
             n_camera_fieldOfView = camera[3],
-            n_camera_vector_x    = camera[4],
-            n_camera_vector_y    = camera[5],
-            n_camera_vector_z    = camera[6],
+            n_camera_vector_x = camera[4],
+            n_camera_vector_y = camera[5],
+            n_camera_vector_z = camera[6],
 
             n_objects_0_type = objects[0][0],
             n_objects_0_x = objects[0][1],
@@ -94,7 +98,7 @@ function render(mode) {
             n_objects_1_lamb = objects[1][8],
             n_objects_1_amb = objects[1][9],
             n_objects_1_rad = objects[1][10],
-            
+
             n_objects_2_type = objects[2][0],
             n_objects_2_x = objects[2][1],
             n_objects_2_y = objects[2][2],
@@ -116,30 +120,30 @@ function render(mode) {
             eyeVector_y = n_camera_vector_y - n_camera_point_y,
             eyeVector_z = n_camera_vector_z - n_camera_point_z;
         // unit vector
-        var eyeVector_len = Vector_length(eyeVector_x,eyeVector_y,eyeVector_z);
-            eyeVector_x /= eyeVector_len;
-            eyeVector_y /= eyeVector_len;
-            eyeVector_z /= eyeVector_len;
-       
+        var eyeVector_len = Vector_length(eyeVector_x, eyeVector_y, eyeVector_z);
+        eyeVector_x /= eyeVector_len;
+        eyeVector_y /= eyeVector_len;
+        eyeVector_z /= eyeVector_len;
+
         // cross product
         var vpRight_x = (eyeVector_y * Vector_UP_z) - (eyeVector_z * Vector_UP_y),
             vpRight_y = (eyeVector_z * Vector_UP_x) - (eyeVector_x * Vector_UP_z),
             vpRight_z = (eyeVector_x * Vector_UP_y) - (eyeVector_y * Vector_UP_x);
         // unit vector
-        var vpRight_len = Vector_length(vpRight_x,vpRight_y,vpRight_z);
-            vpRight_x /= vpRight_len;
-            vpRight_y /= vpRight_len;
-            vpRight_z /= vpRight_len;
-        
+        var vpRight_len = Vector_length(vpRight_x, vpRight_y, vpRight_z);
+        vpRight_x /= vpRight_len;
+        vpRight_y /= vpRight_len;
+        vpRight_z /= vpRight_len;
+
         // cross product
         var vpUp_x = (vpRight_y * eyeVector_z) - (vpRight_z * eyeVector_y),
-            vpUp_y =  (vpRight_z * eyeVector_x) - (vpRight_x * eyeVector_z),
-            vpUp_z =  (vpRight_x * eyeVector_y) - (vpRight_y * eyeVector_x);
+            vpUp_y = (vpRight_z * eyeVector_x) - (vpRight_x * eyeVector_z),
+            vpUp_z = (vpRight_x * eyeVector_y) - (vpRight_y * eyeVector_x);
         // unit vector
-        var vpUp_len = Vector_length(vpUp_x,vpUp_y,vpUp_z);
-            vpUp_x /= vpUp_len;
-            vpUp_y /= vpUp_len;
-            vpUp_z /= vpUp_len;
+        var vpUp_len = Vector_length(vpUp_x, vpUp_y, vpUp_z);
+        vpUp_x /= vpUp_len;
+        vpUp_y /= vpUp_len;
+        vpUp_z /= vpUp_len;
 
         var fovRadians = 3.141592653589793 * (n_camera_fieldOfView / 2) / 180,
             heightWidthRatio = height / width,
@@ -151,7 +155,7 @@ function render(mode) {
             pixelHeight = cameraheight / (height - 1);
 
         var index, color_R, color_G, color_B;
-        var ray_x = n_camera_point_x, 
+        var ray_x = n_camera_point_x,
             ray_y = n_camera_point_y,
             ray_z = n_camera_point_z;
 
@@ -172,81 +176,87 @@ function render(mode) {
             ray_v_y = eyeVector_y + xcomp_y + ycomp_y,
             ray_v_z = eyeVector_z + xcomp_z + ycomp_z;
         // unit vector
-        var ray_v_len = Vector_length(ray_v_x,ray_v_y,ray_v_z);
-            ray_v_x /= ray_v_len;
-            ray_v_y /= ray_v_len;
-            ray_v_z /= ray_v_len;
+        var ray_v_len = Vector_length(ray_v_x, ray_v_y, ray_v_z);
+        ray_v_x /= ray_v_len;
+        ray_v_y /= ray_v_len;
+        ray_v_z /= ray_v_len;
 
-         // if(this.thread.x == 39 && this.thread.y == 200){
-         //     debugger;
-         // }   
+        // if(this.thread.x == 39 && this.thread.y == 200){
+        //     debugger;
+        // }   
 
         color_R = trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
-            n_objects_0_type,n_objects_0_x,n_objects_0_y,n_objects_0_z,n_objects_0_r,n_objects_0_g,n_objects_0_b,n_objects_0_spec,n_objects_0_lamb,n_objects_0_amb,n_objects_0_rad,
-            n_objects_1_type,n_objects_1_x,n_objects_1_y,n_objects_1_z,n_objects_1_r,n_objects_1_g,n_objects_1_b,n_objects_1_spec,n_objects_1_lamb,n_objects_1_amb,n_objects_1_rad,
-            n_objects_2_type,n_objects_2_x,n_objects_2_y,n_objects_2_z,n_objects_2_r,n_objects_2_g,n_objects_2_b,n_objects_2_spec,n_objects_2_lamb,n_objects_2_amb,n_objects_2_rad,
+            n_objects_0_type, n_objects_0_x, n_objects_0_y, n_objects_0_z, n_objects_0_r, n_objects_0_g, n_objects_0_b, n_objects_0_spec, n_objects_0_lamb, n_objects_0_amb, n_objects_0_rad,
+            n_objects_1_type, n_objects_1_x, n_objects_1_y, n_objects_1_z, n_objects_1_r, n_objects_1_g, n_objects_1_b, n_objects_1_spec, n_objects_1_lamb, n_objects_1_amb, n_objects_1_rad,
+            n_objects_2_type, n_objects_2_x, n_objects_2_y, n_objects_2_z, n_objects_2_r, n_objects_2_g, n_objects_2_b, n_objects_2_spec, n_objects_2_lamb, n_objects_2_amb, n_objects_2_rad,
             n_lights_x, n_lights_y, n_lights_z, 0, 0);
         color_G = trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
-            n_objects_0_type,n_objects_0_x,n_objects_0_y,n_objects_0_z,n_objects_0_r,n_objects_0_g,n_objects_0_b,n_objects_0_spec,n_objects_0_lamb,n_objects_0_amb,n_objects_0_rad,
-            n_objects_1_type,n_objects_1_x,n_objects_1_y,n_objects_1_z,n_objects_1_r,n_objects_1_g,n_objects_1_b,n_objects_1_spec,n_objects_1_lamb,n_objects_1_amb,n_objects_1_rad,
-            n_objects_2_type,n_objects_2_x,n_objects_2_y,n_objects_2_z,n_objects_2_r,n_objects_2_g,n_objects_2_b,n_objects_2_spec,n_objects_2_lamb,n_objects_2_amb,n_objects_2_rad,
+            n_objects_0_type, n_objects_0_x, n_objects_0_y, n_objects_0_z, n_objects_0_r, n_objects_0_g, n_objects_0_b, n_objects_0_spec, n_objects_0_lamb, n_objects_0_amb, n_objects_0_rad,
+            n_objects_1_type, n_objects_1_x, n_objects_1_y, n_objects_1_z, n_objects_1_r, n_objects_1_g, n_objects_1_b, n_objects_1_spec, n_objects_1_lamb, n_objects_1_amb, n_objects_1_rad,
+            n_objects_2_type, n_objects_2_x, n_objects_2_y, n_objects_2_z, n_objects_2_r, n_objects_2_g, n_objects_2_b, n_objects_2_spec, n_objects_2_lamb, n_objects_2_amb, n_objects_2_rad,
             n_lights_x, n_lights_y, n_lights_z, 0, 1);
         color_B = trace_color0(ray_x, ray_y, ray_z, ray_v_x, ray_v_y, ray_v_z,
-            n_objects_0_type,n_objects_0_x,n_objects_0_y,n_objects_0_z,n_objects_0_r,n_objects_0_g,n_objects_0_b,n_objects_0_spec,n_objects_0_lamb,n_objects_0_amb,n_objects_0_rad,
-            n_objects_1_type,n_objects_1_x,n_objects_1_y,n_objects_1_z,n_objects_1_r,n_objects_1_g,n_objects_1_b,n_objects_1_spec,n_objects_1_lamb,n_objects_1_amb,n_objects_1_rad,
-            n_objects_2_type,n_objects_2_x,n_objects_2_y,n_objects_2_z,n_objects_2_r,n_objects_2_g,n_objects_2_b,n_objects_2_spec,n_objects_2_lamb,n_objects_2_amb,n_objects_2_rad,
+            n_objects_0_type, n_objects_0_x, n_objects_0_y, n_objects_0_z, n_objects_0_r, n_objects_0_g, n_objects_0_b, n_objects_0_spec, n_objects_0_lamb, n_objects_0_amb, n_objects_0_rad,
+            n_objects_1_type, n_objects_1_x, n_objects_1_y, n_objects_1_z, n_objects_1_r, n_objects_1_g, n_objects_1_b, n_objects_1_spec, n_objects_1_lamb, n_objects_1_amb, n_objects_1_rad,
+            n_objects_2_type, n_objects_2_x, n_objects_2_y, n_objects_2_z, n_objects_2_r, n_objects_2_g, n_objects_2_b, n_objects_2_spec, n_objects_2_lamb, n_objects_2_amb, n_objects_2_rad,
             n_lights_x, n_lights_y, n_lights_z, 0, 2);
 
-        debug_array[this.thread.x][this.thread.y] = {r:color_R, g:color_G, b:color_B};
+        // debug_array[this.thread.x][this.thread.y] = {
+        //     r: color_R,
+        //     g: color_G,
+        //     b: color_B
+        // };
+
         this.color(color_R, color_G, color_B);
 
-
-        }, opt);
+    }, opt);
     return task;
 }
 
 var planet1 = 0,
     planet2 = 0;
 
-var mykernel = render("cpu");
-var mycode   = render("cpu");
+var mykernel = render("gpu");
+var mycode = render("cpu");
 mykernel(camera, objects, lights);
 var canvas = mykernel.getCanvas();
 document.getElementsByTagName('body')[0].appendChild(canvas);
 
 var f = document.querySelector("#fps");
+
 function renderLoop() {
     //get the FPS
     f.innerHTML = fps.getFPS();
 
+    if (selection === 0) {
+        mycode(camera, objects, lights);
+        var cv = document.getElementsByTagName("canvas")[0];
+        var bdy = cv.parentNode;
+        var newCanvas = mycode.getCanvas();
+        bdy.replaceChild(newCanvas, cv);
+    } else {
+        mykernel(camera, objects, lights);
+        var cv = document.getElementsByTagName("canvas")[0];
+        var bdy = cv.parentNode;
+        var newCanvas = mykernel.getCanvas();
+        bdy.replaceChild(newCanvas, cv);
+    }
     // make one planet spin a little bit faster than the other, just for
     // effect.
+
     planet1 += 0.1;
     planet2 += 0.8;
 
     // // set the position of each moon with some trig.
-    // objects[1][1] = Math.sin(planet1) * 3.5;
-    // objects[1][2] = Math.cos(planet1) * 3.5;
-    // objects[1][3] = -3 + (Math.cos(planet1) * 3.5);
+    objects[1][1] = Math.sin(planet1) * 3.5;
+    objects[1][2] = Math.cos(planet1) * 3.5;
+    objects[1][3] = -3 + (Math.cos(planet1) * 3.5);
 
-    // objects[2][1] = Math.sin(planet2) * 4;
-    // objects[2][3] = -3 + (Math.cos(planet2) * 4);
+    objects[2][1] = Math.sin(planet2) * 4;
+    objects[2][3] = -3 + (Math.cos(planet2) * 4);
 
     // finally, render the scene!
 
-    if (selection === 0) {
-          mycode(camera, objects, lights);
-          var cv = document.getElementsByTagName("canvas")[0];
-          var bdy = cv.parentNode;
-          var newCanvas = mycode.getCanvas();
-          bdy.replaceChild(newCanvas, cv);
-    } else {
-          mykernel(camera, objects, lights);
-          var cv = document.getElementsByTagName("canvas")[0];
-          var bdy = cv.parentNode;
-          var newCanvas = mykernel.getCanvas();
-          bdy.replaceChild(newCanvas, cv);
-    }
 
     // and as soon as we're finished, render it again and move the planets
     // again
@@ -254,16 +264,3 @@ function renderLoop() {
 }
 
 window.onload = renderLoop;
-
-//stooopid functions
-var selection = 1;
-
-function boost( element ) {
-  if ( element.value == "Using CPU" ) {
-     selection = 0;
-     element.value = "Using GPU";
-  } else {
-     selection = 1;
-     element.value = "Using CPU";
-  }
-}
