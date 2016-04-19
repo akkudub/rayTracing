@@ -1,11 +1,12 @@
 //dot
-var Vector_dotProduct = function(a_x, a_y, a_z, b_x, b_y, b_z){
+function Vector_dotProduct(a_x, a_y, a_z, b_x, b_y, b_z){
     return (a_x * b_x) + (a_y * b_y) + (a_z * b_z);
 };
 
 //length
-var Vector_length = function(a_x, a_y, a_z) {
-    return Math.sqrt(Vector_dotProduct(a_x, a_y, a_z, a_x, a_y, a_z));
+function Vector_length(a_x, a_y, a_z) {
+    var a = (a_x * a_x) + (a_y * a_y) + (a_z * a_z); 
+    return Math.sqrt(a);
 };
 
 
